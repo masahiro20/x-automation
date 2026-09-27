@@ -1,0 +1,35 @@
+name: 投稿案を生成
+
+on:
+  schedule:
+    - cron: "0 20 * * *" # 毎日 5:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: queue
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 投稿案を生成
+        run: python src/generate.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          POSTS_PER_DAY: ${{ vars.POSTS_PER_DAY || '3' }}
+      - name: キューを保存
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add queue/posts.json
+          git diff --cached --quiet || (git commit -m "投稿案を追加" && git pull --rebase && git push)
