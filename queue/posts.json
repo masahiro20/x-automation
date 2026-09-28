@@ -58,9 +58,11 @@
       "https://www.itmedia.co.jp/pcuser/articles/2609/24/news079.html",
       "https://news.mynavi.jp/article/20260926-5030354/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-09-28T18:24:10+09:00",
-    "image": "queue/images/5aa5d6c18387.png"
+    "image": "queue/images/5aa5d6c18387.png",
+    "posted_at": "2026-09-28T18:25:16+09:00",
+    "tweet_id": "2104502690650693859"
   },
   {
     "id": "5aad0155bd2a",
