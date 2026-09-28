@@ -87,9 +87,11 @@
       "https://news.kakaku.com/prdnews/cd=kaden/ctcd=3114/",
       "https://news.kakaku.com/prdnews/cd=kaden/ctcd=3114/mcd=239/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-09-28T18:24:10+09:00",
-    "image": "queue/images/f4d60832ebd0.png"
+    "image": "queue/images/f4d60832ebd0.png",
+    "posted_at": "2026-09-29T04:28:24+09:00",
+    "tweet_id": "2104654473885004140"
   },
   {
     "id": "69d1fb6f0198",
