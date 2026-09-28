@@ -102,10 +102,17 @@ WRITER_SYSTEM = f"""あなたはガジェット・便利グッズ専門の X ア
 - 事実の裏付けが弱いもの、ありきたりなものは厳しく低く付ける"""
 
 
-def _create(client: anthropic.Anthropic, **kwargs):
-    return client.beta.messages.create(
-        model=MODEL, betas=BETAS, fallbacks="default", thinking={"type": "adaptive"}, **kwargs
-    )
+def _request(client: anthropic.Anthropic, **kwargs):
+    # 出力上限が大きいリクエストは、SDK の仕様でストリーミングが必須
+    with client.beta.messages.stream(
+        model=MODEL,
+        betas=BETAS,
+        fallbacks="default",
+        thinking={"type": "adaptive"},
+        max_tokens=32000,
+        **kwargs,
+    ) as stream:
+        return stream.get_final_message()
 
 
 def research(client: anthropic.Anthropic, strategy: str, recent: list[str]) -> str:
@@ -131,9 +138,7 @@ def research(client: anthropic.Anthropic, strategy: str, recent: list[str]) -> s
         }
     ]
     for _ in range(MAX_CONTINUATIONS):
-        response = _create(
-            client, max_tokens=32000, system=RESEARCH_SYSTEM, tools=tools, messages=messages
-        )
+        response = _request(client, system=RESEARCH_SYSTEM, tools=tools, messages=messages)
         if response.stop_reason != "pause_turn":
             break
         # サーバー側の検索ループが上限に達しただけなので、そのまま続きを依頼する
@@ -164,12 +169,8 @@ def write_drafts(
 
 # 依頼
 投稿の候補を {count} 本書いてください。型が偏らないようにし、各候補を厳しめに採点してください。"""
-    response = client.beta.messages.parse(
-        model=MODEL,
-        betas=BETAS,
-        fallbacks="default",
-        thinking={"type": "adaptive"},
-        max_tokens=32000,
+    response = _request(
+        client,
         system=WRITER_SYSTEM,
         messages=[{"role": "user", "content": user_msg}],
         output_format=Drafts,
