@@ -1,7 +1,7 @@
 """queue/posts.json の先頭の投稿案を X に 1 本投稿する。
 
 環境変数:
-    POSTING_ENABLED        "true" のときだけ実際に投稿する。それ以外は内容を表示するだけ
+    POSTING_ENABLED        "false" にすると一時停止（内容を表示するだけ）。未設定なら投稿する
     X_API_KEY / X_API_SECRET / X_ACCESS_TOKEN / X_ACCESS_TOKEN_SECRET
                            X Developer Portal で発行したキー（Read and Write 権限）
 """
@@ -25,8 +25,8 @@ def main() -> int:
         print("投稿待ちの投稿案がありません。")
         return 0
 
-    if os.environ.get("POSTING_ENABLED") != "true":
-        print("[お試しモード] 次の内容は投稿されていません:\n" + target["text"])
+    if os.environ.get("POSTING_ENABLED") == "false":
+        print("[一時停止中] 次の内容は投稿されていません:\n" + target["text"])
         return 0
 
     missing = [k for k in X_ENV_KEYS if not os.environ.get(k)]
