@@ -13,8 +13,9 @@ STRATEGY_PATH = ROOT / "config" / "strategy.md"
 JST = timezone(timedelta(hours=9))
 
 # X の文字数上限（重み付き）。日本語などの全角文字は 2、半角英数字は 1 として数える。
-# 280 = 全角 140 文字。Premium なら長文も投稿できるが、タイムラインで読まれやすい長さに抑える。
-MAX_WEIGHTED_LENGTH = 280
+# 500 = 全角 250 文字。280 を超える投稿には X Premium が必要。
+# タイムラインでは冒頭だけが表示され「さらに表示」で続きが開くので、長すぎない範囲に抑える。
+MAX_WEIGHTED_LENGTH = 500
 
 
 def now_jst() -> str:
