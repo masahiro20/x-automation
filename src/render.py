@@ -29,6 +29,8 @@ ORANGE_SOFT = (255, 240, 224)
 MARKER = (255, 221, 51)
 LINE = (232, 226, 216)
 HEAD_BG = (241, 236, 228)
+VERDICT_COLORS = {"買い": (22, 150, 80), "待ち": (255, 118, 0), "見送り": (120, 124, 132)}
+STAMP = 170
 SYMBOL_COLORS = {"◎": (22, 150, 80), "○": (40, 110, 200), "△": (230, 150, 0), "×": (215, 50, 50)}
 
 FONT_CANDIDATES = {
@@ -80,7 +82,26 @@ def _lh(font, ratio: float = 1.3) -> int:
     return int((ascent + descent) * ratio)
 
 
-def _draw_title(d: ImageDraw.ImageDraw, y: int, tag: str, title: str, highlight: str) -> int:
+def _draw_verdict(img: Image.Image, verdict: str) -> None:
+    """右上に「判定」のハンコを少し傾けて押す。"""
+    color = VERDICT_COLORS.get(verdict)
+    if not color:
+        return
+    stamp = Image.new("RGBA", (STAMP, STAMP), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(stamp)
+    sd.ellipse((4, 4, STAMP - 4, STAMP - 4), fill=(255, 255, 255, 255), outline=color + (255,), width=8)
+    sd.ellipse((18, 18, STAMP - 18, STAMP - 18), outline=color + (255,), width=3)
+    label_font = _font("bold", 22)
+    font = _font("bold", 50 if len(verdict) <= 2 else 38)
+    lw = sd.textlength("判定", font=label_font)
+    sd.text(((STAMP - lw) / 2, 34), "判定", font=label_font, fill=color + (255,))
+    vw = sd.textlength(verdict, font=font)
+    sd.text(((STAMP - vw) / 2, 62 if len(verdict) <= 2 else 70), verdict, font=font, fill=color + (255,))
+    stamp = stamp.rotate(12, resample=Image.BICUBIC, expand=False)
+    img.paste(stamp, (WIDTH - PAD - STAMP + 10, PAD - 20), stamp)
+
+
+def _draw_title(d: ImageDraw.ImageDraw, y: int, tag: str, title: str, highlight: str, reserve: int = 0) -> int:
     if tag:
         tag_font = _font("bold", 28)
         w = int(d.textlength(tag, font=tag_font)) + 36
@@ -90,7 +111,7 @@ def _draw_title(d: ImageDraw.ImageDraw, y: int, tag: str, title: str, highlight:
     size = 66
     font = _font("bold", size)
     lh = int(size * 1.4)
-    for line in _wrap(d, title, font, WIDTH - PAD * 2):
+    for line in _wrap(d, title, font, WIDTH - PAD * 2 - reserve):
         if highlight and highlight in line:
             # キーワードの下半分に黄色マーカーを引く
             x0 = PAD + d.textlength(line[: line.index(highlight)], font=font)
@@ -263,11 +284,16 @@ def _draw_footer(d, y: int, note: str) -> int:
 
 
 def render(spec: dict, out_path: Path, tag: str = "") -> Path:
-    """spec: ImageSpec（generate.py）を dict にしたもの。kind は table / checklist / number。"""
+    """spec: ImageSpec（generate.py）を dict にしたもの。kind は table / checklist / number。
+    verdict（買い / 待ち / 見送り）があれば右上に判定のハンコを押す。"""
     # 高さが決まる前に大きめのキャンバスへ描き、最後に使った分だけ切り出す
     img = Image.new("RGB", (WIDTH, MAX_HEIGHT * 2), BG)
     d = ImageDraw.Draw(img)
-    y = _draw_title(d, PAD, tag, spec["title"], spec.get("highlight", ""))
+    verdict = spec.get("verdict", "")
+    reserve = STAMP if verdict in VERDICT_COLORS else 0
+    y = _draw_title(d, PAD, tag, spec["title"], spec.get("highlight", ""), reserve)
+    if reserve:
+        y = max(y, PAD + STAMP)
     if spec["kind"] == "table":
         y = _draw_table(d, y, spec.get("headers", []), spec.get("rows", []), spec.get("recommend_col", -1))
     elif spec["kind"] == "checklist":
@@ -276,6 +302,7 @@ def render(spec: dict, out_path: Path, tag: str = "") -> Path:
         y = _draw_number(d, y, spec.get("big_text", ""), spec.get("caption", ""))
     y = _draw_conclusion(d, y, spec.get("conclusion", ""))
     y = _draw_footer(d, max(y, MIN_HEIGHT - PAD - 44), spec.get("note", ""))
+    _draw_verdict(img, verdict)
     height = min(max(y + PAD - 20, MIN_HEIGHT), MAX_HEIGHT)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     img.crop((0, 0, WIDTH, height)).save(out_path, "PNG", optimize=True)

@@ -1,8 +1,10 @@
-name: 投稿案を生成
+name: 投稿案を生成（予備）
 
+# ふだんは Claude Code のルーティン（ROUTINE.md）が投稿案を作る。
+# これはルーティンが失敗して投稿待ちが 2 本未満になったときだけ API で補充する予備。
 on:
   schedule:
-    - cron: "0 20 * * *" # 毎日 5:00 JST
+    - cron: "0 1 * * *" # 10:00 JST
   workflow_dispatch:
 
 permissions:
@@ -29,6 +31,8 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           POSTS_PER_DAY: ${{ vars.POSTS_PER_DAY || '3' }}
+          # 手動実行のときは本数に関係なく補充する
+          MIN_QUEUE: ${{ github.event_name == 'schedule' && '2' || '' }}
       - name: キューを保存
         run: |
           git config user.name "github-actions[bot]"

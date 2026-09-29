@@ -1,4 +1,7 @@
-"""config/strategy.md の方針に沿って投稿案を作り、queue/posts.json に追加する。
+"""config/strategy.md の方針に沿って投稿案を作り、queue/posts.json に追加する（API を使う予備の仕組み）。
+
+ふだんの投稿案は Claude Code のルーティン（ROUTINE.md）が作る。これはルーティンが失敗して
+投稿待ちが尽きかけたときだけ動く（MIN_QUEUE）。
 
 1. 調査: Claude が Web 検索で新製品・セール・話題を調べ、出典付きのメモにまとめる
 2. 執筆: メモの事実だけを使って必要数の 2 倍の候補を書き、自己採点する
@@ -24,6 +27,7 @@ import anthropic
 from pydantic import BaseModel, Field
 
 from common import (
+    BANNED_PHRASES,
     JST,
     ROOT,
     MAX_WEIGHTED_LENGTH,
@@ -180,27 +184,6 @@ supported を false にするもの:
 
 意見・感想（「地味にうれしい」「迷ったらこっちでいい」など）は照合の対象外です。"""
 
-# 残っていたら AI っぽい文章とみなして除外する言い回し
-BANNED_PHRASES = (
-    "しましょう",
-    "得策",
-    "重要です",
-    "と言えるでしょう",
-    "が挙げられます",
-    "に最適",
-    "必見",
-    "注目です",
-    "ご存知",
-    "知っていますか",
-    "いかがでしたか",
-    "解説します",
-    "まとめると",
-    "することで",
-    "な方におすすめ",
-    "取りこぼし",
-    "選び分けられます",
-    "用途で分かれます",
-)
 
 
 def _request(client: anthropic.Anthropic, stage: str, **kwargs):
@@ -384,6 +367,11 @@ def main() -> int:
     posts_per_day = int(os.environ.get("POSTS_PER_DAY", "3"))
     queue = load_queue()
     queued = [p for p in queue if p["status"] == "queued"]
+    # 予備として動くとき: 投稿待ちが MIN_QUEUE 本以上あれば、Claude Code のルーティンに任せて何もしない
+    min_queue = int(os.environ.get("MIN_QUEUE") or 0)
+    if min_queue and len(queued) >= min_queue:
+        print(f"投稿待ちが {len(queued)} 本あるため、予備の生成は不要です。")
+        return 0
     needed = posts_per_day * 2 - len(queued)
     if needed <= 0:
         print(f"キューに {len(queued)} 本あるため、生成は不要です。")

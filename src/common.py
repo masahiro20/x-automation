@@ -18,6 +18,29 @@ JST = timezone(timedelta(hours=9))
 MAX_WEIGHTED_LENGTH = 500
 
 
+# 残っていたら AI っぽい文章とみなして除外する言い回し
+BANNED_PHRASES = (
+    "しましょう",
+    "得策",
+    "重要です",
+    "と言えるでしょう",
+    "が挙げられます",
+    "に最適",
+    "必見",
+    "注目です",
+    "ご存知",
+    "知っていますか",
+    "いかがでしたか",
+    "解説します",
+    "まとめると",
+    "することで",
+    "な方におすすめ",
+    "取りこぼし",
+    "選び分けられます",
+    "用途で分かれます",
+)
+
+
 def now_jst() -> str:
     return datetime.now(JST).isoformat(timespec="seconds")
 
