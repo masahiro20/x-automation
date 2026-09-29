@@ -252,5 +252,70 @@
     "created_at": "2026-09-29T09:46:14+09:00",
     "image": "queue/images/eeda30bcc417.png",
     "error": "「無償」は出典に記載なし"
+  },
+  {
+    "id": "72176f827a62",
+    "text": "ロボット掃除機、進化してるのは吸引力じゃなくて「隅」でした。\n\n10/2発売のRoborock Qrevo 2 Pro。サイドブラシが部屋の隅を検知すると、回転の向きを勝手に切り替えます。これで四隅のカバー率が従来比で最大30%アップ。吸引は25,000Pa。\n\n想定16万4,780円。売り場はヤマダデンキとヤマダウェブコムで、予約は9/24から。\n\n部屋の角のホコリ、あれが一番イラッとするやつなんですよね",
+    "category": "速報",
+    "topic": "Roborock",
+    "score": 8,
+    "sources": [
+      "https://kaden.watch.impress.co.jp/docs/news/2143288.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:57:51+09:00",
+    "image": "queue/images/72176f827a62.png"
+  },
+  {
+    "id": "df38599c6c3b",
+    "text": "ロボット掃除機、「全部入り」と「小さい」でもう別ジャンルです。\n\n全部入り → Roborock Qrevo 2 Pro（10/2発売）\n四隅のカバー率が従来比で最大30%、吸引25,000Pa、想定16万4,780円。\n\n小さい → iRobot Roomba Mini\n日本法人の発案で日本が先行発売。サイズは従来ルンバの約半分で、Wi-Fiがなくてもボタンひとつで走ります。\n\n1台目か、2台目か。ここで見るところがごっそり変わります",
+    "category": "比較",
+    "topic": "Roborock",
+    "score": 8,
+    "sources": [
+      "https://kaden.watch.impress.co.jp/docs/news/2143288.html",
+      "https://www.irobot-jp.com/press/pdf/20260219.pdf"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:57:52+09:00",
+    "image": "queue/images/df38599c6c3b.png"
+  },
+  {
+    "id": "873a87324444",
+    "text": "16万円の新型が話題ですけど、実際に売れてるのはそこじゃないです。\n\n価格.comの売れ筋は「ゴミ吸引＋水拭き＋ドック」の多機能タイプ。ランキング常連はエコバックスのDEEBOT T50 OMNIとN30 PLUSで、どっちも価格を抑えたモデルなんですよね。\n\nDEEBOT mini2なら最安69,800円（価格.com掲載・9/29確認）。\n\nルンバ一強だったのは昔の話で、今はエコバックス・Roborock・Ankerが主役です",
+    "category": "買い時",
+    "topic": "ECOVACS",
+    "score": 7,
+    "sources": [
+      "https://kakaku.com/kaden/robot-cleaner/ranking_V045/"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:57:52+09:00"
+  },
+  {
+    "id": "423f4f2973b2",
+    "text": "落とし物タグ、Androidだから諦めてた人いません？\n\nAnkerのEufyから「SmartTrack Card E40」。カード型でiOS・Android両対応、そのうえワイヤレス充電に対応してます。\n\n充電できる＝電池切れたら終わり、じゃない。財布に入れっぱなしにするならこれ、かなりアリだと思います",
+    "category": "速報",
+    "topic": "Anker",
+    "score": 7,
+    "sources": [
+      "https://corp.ankerjapan.com/news"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:57:52+09:00"
+  },
+  {
+    "id": "0f660bc94264",
+    "text": "Soundcoreのイヤホン、そのうち名前が変わります。\n\nAnkerがPower Conference 2026で、SoundcoreとEufyを年内をめどにAnkerへ統合すると発表。ロゴも新しいAnkerブランドのものに。\n\n製品が消える話じゃないです。ただ、ブランド名で検索して買うタイプの人はちょっと戸惑うかも。頭の隅に置いとくと楽です",
+    "category": "速報",
+    "topic": "Anker",
+    "score": 7,
+    "sources": [
+      "https://www.ankerjapan.com/pages/anker-power-conference-26",
+      "https://www.lifehacker.jp/article/2605-lht-anker-power-conference-2026/"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:57:52+09:00",
+    "image": "queue/images/0f660bc94264.png"
   }
 ]
