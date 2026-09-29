@@ -40,9 +40,13 @@ def main() -> int:
 
     steps = [
         ("名前・自己紹介", lambda: api.update_profile(name=profile["name"], description=profile["description"])),
-        ("アイコン", lambda: api.update_profile_image(str(ROOT / profile["icon"]))),
-        ("ヘッダー", lambda: api.update_profile_banner(str(ROOT / profile["banner"]))),
     ]
+    # 同じ画像を再アップロードすると X に拒否されるため、画像は指定したときだけ更新する
+    if os.environ.get("PROFILE_TARGET") == "all":
+        steps += [
+            ("アイコン", lambda: api.update_profile_image(str(ROOT / profile["icon"]))),
+            ("ヘッダー", lambda: api.update_profile_banner(str(ROOT / profile["banner"]))),
+        ]
     ok = True
     for label, step in steps:
         try:
