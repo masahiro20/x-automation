@@ -115,9 +115,10 @@
     "sources": [
       "https://news.mynavi.jp/article/20260926-5030354/"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-28T18:24:10+09:00",
-    "image": "queue/images/f6bf483ea72f.png"
+    "image": "queue/images/f6bf483ea72f.png",
+    "error": "文体が硬い・AI っぽいため、新しい書き方で作り直し"
   },
   {
     "id": "5ac0c9d69d6e",
@@ -127,9 +128,10 @@
     "sources": [
       "https://www.pricey.jp/web/articles/1828"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-28T18:24:10+09:00",
-    "image": "queue/images/5ac0c9d69d6e.png"
+    "image": "queue/images/5ac0c9d69d6e.png",
+    "error": "文体が硬い・AI っぽいため、新しい書き方で作り直し"
   },
   {
     "id": "39e5f7a102f7",
@@ -140,9 +142,10 @@
       "https://corriente.jp/airpods-5-announced/",
       "https://news.kakaku.com/prdnews/cd=kaden/ctcd=2046/id=158748/"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-29T09:21:47+09:00",
-    "image": "queue/images/39e5f7a102f7.png"
+    "image": "queue/images/39e5f7a102f7.png",
+    "error": "文体が硬い・AI っぽいため、新しい書き方で作り直し"
   },
   {
     "id": "bb87bc46a0ab",
@@ -154,8 +157,9 @@
       "https://www.phileweb.com/news/d-av/202609/18/65999.html",
       "https://kakaku.com/item/J0000051493/"
     ],
-    "status": "queued",
-    "created_at": "2026-09-29T09:21:47+09:00"
+    "status": "skipped",
+    "created_at": "2026-09-29T09:21:47+09:00",
+    "error": "文体が硬い・AI っぽいため、新しい書き方で作り直し"
   },
   {
     "id": "29104d545c56",
@@ -167,8 +171,9 @@
       "https://www.bose.co.jp/pressroom/bose-sport-open-earbuds-and-bose-ultra-open-earbuds-2nd-gen",
       "https://www.phileweb.com/news/d-av/202609/18/65999.html"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-29T09:21:47+09:00",
-    "image": "queue/images/29104d545c56.png"
+    "image": "queue/images/29104d545c56.png",
+    "error": "文体が硬い・AI っぽいため、新しい書き方で作り直し"
   }
 ]

@@ -1,4 +1,10 @@
-"""投稿に添える図解画像（比較表・チェックリスト）を PNG で描く。"""
+"""投稿に添える図解画像（比較表・チェックリスト・数字カード）を PNG で描く。
+
+X のタイムラインで目に止まり、保存されやすい「手作りの図解」に寄せたデザイン。
+- 見出しは大きく、キーワードに黄色マーカー
+- 比較表は ◎○△× を色付きの記号で、おすすめ列にバッジ
+- 一番下に一言の結論バー、右下にアカウント名
+"""
 
 from __future__ import annotations
 
@@ -8,25 +14,35 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 WIDTH = 1200
-PADDING = 56
+PAD = 64
 MIN_HEIGHT = 675
 MAX_HEIGHT = 1500
+BRAND = "ガジェットの選び方ノート"
 
-BG = (248, 249, 251)
-HEADER_BG = (22, 34, 56)
-HEADER_FG = (255, 255, 255)
-TEXT = (28, 32, 40)
-SUBTLE = (110, 118, 130)
-ACCENT = (255, 140, 0)
-ROW_ALT = (236, 240, 245)
-TABLE_HEAD_BG = (52, 72, 104)
-LINE = (210, 216, 224)
+BG = (255, 250, 243)
+CARD = (255, 255, 255)
+NAVY = (26, 36, 58)
+TEXT = (40, 44, 52)
+SUBTLE = (128, 132, 140)
+ORANGE = (255, 118, 0)
+ORANGE_SOFT = (255, 240, 224)
+MARKER = (255, 221, 51)
+LINE = (232, 226, 216)
+HEAD_BG = (241, 236, 228)
+SYMBOL_COLORS = {"◎": (22, 150, 80), "○": (40, 110, 200), "△": (230, 150, 0), "×": (215, 50, 50)}
 
 FONT_CANDIDATES = {
     "bold": [
         os.environ.get("FONT_BOLD", ""),
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Black.ttc",
         "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
         "/usr/share/fonts/noto-cjk/NotoSansCJK-Bold.ttc",
+    ],
+    "medium": [
+        os.environ.get("FONT_MEDIUM", ""),
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Medium.ttc",
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+        "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
     ],
     "regular": [
         os.environ.get("FONT_REGULAR", ""),
@@ -59,117 +75,208 @@ def _wrap(draw: ImageDraw.ImageDraw, text: str, font, max_width: int) -> list[st
     return lines
 
 
-def _line_height(font) -> int:
+def _lh(font, ratio: float = 1.3) -> int:
     ascent, descent = font.getmetrics()
-    return int((ascent + descent) * 1.25)
+    return int((ascent + descent) * ratio)
 
 
-class _Canvas:
-    """高さが決まる前に描画内容を積んでおき、最後にまとめて描く。"""
-
-    def __init__(self) -> None:
-        self.ops: list[tuple] = []
-        self.y = 0
-
-    def add(self, *op) -> None:
-        self.ops.append(op)
-
-
-def _layout_header(c: _Canvas, measure, title: str) -> None:
-    font = _font("bold", 52)
-    lines = _wrap(measure, title, font, WIDTH - PADDING * 2)
-    lh = _line_height(font)
-    height = PADDING + lh * len(lines) + PADDING // 2
-    c.add("rect", (0, 0, WIDTH, height), HEADER_BG)
-    c.add("rect", (0, height, WIDTH, height + 8), ACCENT)
-    for i, line in enumerate(lines):
-        c.add("text", (PADDING, PADDING * 0.8 + lh * i), line, font, HEADER_FG)
-    c.y = height + 8 + PADDING // 2
+def _draw_title(d: ImageDraw.ImageDraw, y: int, tag: str, title: str, highlight: str) -> int:
+    if tag:
+        tag_font = _font("bold", 28)
+        w = int(d.textlength(tag, font=tag_font)) + 36
+        d.rounded_rectangle((PAD, y, PAD + w, y + 48), radius=24, fill=ORANGE)
+        d.text((PAD + 18, y + 6), tag, font=tag_font, fill=(255, 255, 255))
+        y += 72
+    size = 66
+    font = _font("bold", size)
+    lh = int(size * 1.4)
+    for line in _wrap(d, title, font, WIDTH - PAD * 2):
+        if highlight and highlight in line:
+            # キーワードの下半分に黄色マーカーを引く
+            x0 = PAD + d.textlength(line[: line.index(highlight)], font=font)
+            x1 = x0 + d.textlength(highlight, font=font)
+            d.rectangle((x0 - 4, y + size * 0.72, x1 + 4, y + size * 1.28), fill=MARKER)
+        d.text((PAD, y), line, font=font, fill=NAVY)
+        y += lh
+    return y + 28
 
 
-def _layout_table(c: _Canvas, measure, headers: list[str], rows: list[list[str]]) -> None:
+def _draw_table(d, y: int, headers: list[str], rows: list[list[str]], recommend_col: int) -> int:
     ncol = max(len(headers), max((len(r) for r in rows), default=0))
     if ncol == 0:
-        return
+        return y
     headers = headers + [""] * (ncol - len(headers))
     rows = [r + [""] * (ncol - len(r)) for r in rows]
-    inner = WIDTH - PADDING * 2
-    # 列幅は各列の最長文字数に比例させる（極端に狭くならないよう下限を置く）
+    inner = WIDTH - PAD * 2
     longest = [max(len(str(x)) for x in [headers[i]] + [r[i] for r in rows]) for i in range(ncol)]
-    weights = [max(n, 4) for n in longest]
+    weights = [max(n, 5) for n in longest]
     widths = [int(inner * w / sum(weights)) for w in weights]
-    cell_pad = 16
-    head_font = _font("bold", 30)
-    body_font = _font("regular", 30)
-    first_col_font = _font("bold", 30)
+    xs = [PAD + sum(widths[:i]) for i in range(ncol)]
+    cp = 20
+    head_font = _font("bold", 32)
+    label_font = _font("bold", 30)
+    body_font = _font("medium", 30)
+    symbol_font = _font("bold", 44)
+    has_rec = 0 < recommend_col < ncol
 
-    def layout_row(cells, fonts, bg, fg):
-        wrapped = [
-            _wrap(measure, str(cell), f, w - cell_pad * 2) for cell, f, w in zip(cells, fonts, widths)
-        ]
-        lh = _line_height(body_font)
-        h = max(len(w) for w in wrapped) * lh + cell_pad * 2
-        c.add("rect", (PADDING, c.y, PADDING + inner, c.y + h), bg)
-        x = PADDING
-        for lines, f, w in zip(wrapped, fonts, widths):
-            for i, line in enumerate(lines):
-                c.add("text", (x + cell_pad, c.y + cell_pad + lh * i), line, f, fg)
-            x += w
-        c.y += h
+    # 見出し行の上に「おすすめ」バッジを載せる余白
+    if has_rec:
+        y += 30
+    top = y
 
-    layout_row(headers, [head_font] * ncol, TABLE_HEAD_BG, HEADER_FG)
-    for i, row in enumerate(rows):
-        fonts = [first_col_font] + [body_font] * (ncol - 1)
-        layout_row(row, fonts, ROW_ALT if i % 2 else BG, TEXT)
-        c.add("rect", (PADDING, c.y, PADDING + inner, c.y + 1), LINE)
-    c.y += PADDING // 2
+    def cell_lines(text, font, w):
+        return _wrap(d, str(text), font, w - cp * 2)
+
+    # 行ごとの高さを先に計算する
+    head_lines = [cell_lines(h, head_font, w) for h, w in zip(headers, widths)]
+    head_h = max(len(ls) for ls in head_lines) * _lh(head_font) + cp * 2
+    row_layouts = []
+    for row in rows:
+        cells = []
+        for i, (cell, w) in enumerate(zip(row, widths)):
+            if cell in SYMBOL_COLORS:
+                cells.append(("symbol", cell))
+            else:
+                cells.append(("text", cell_lines(cell, label_font if i == 0 else body_font, w)))
+        n = max((len(c[1]) if c[0] == "text" else 1) for c in cells)
+        row_h = max(n * _lh(body_font), _lh(symbol_font, 1.1)) + cp * 2
+        row_layouts.append((cells, row_h))
+    bottom = top + head_h + sum(h for _, h in row_layouts)
+
+    # カード本体と、おすすめ列の下地
+    d.rounded_rectangle((PAD, top, PAD + inner, bottom), radius=20, fill=CARD, outline=LINE, width=2)
+    d.rounded_rectangle((PAD, top, PAD + inner, top + head_h), radius=20, fill=HEAD_BG)
+    d.rectangle((PAD, top + head_h - 20, PAD + inner, top + head_h), fill=HEAD_BG)
+    if has_rec:
+        x0, x1 = xs[recommend_col], xs[recommend_col] + widths[recommend_col]
+        d.rounded_rectangle((x0 + 4, top - 26, x1 - 4, bottom - 4), radius=16, fill=ORANGE_SOFT, outline=ORANGE, width=4)
+        badge_font = _font("bold", 26)
+        label = "おすすめ"
+        bw = d.textlength(label, font=badge_font) + 32
+        bx = x0 + (widths[recommend_col] - bw) / 2
+        d.rounded_rectangle((bx, top - 44, bx + bw, top - 4), radius=20, fill=ORANGE)
+        d.text((bx + 16, top - 41), label, font=badge_font, fill=(255, 255, 255))
+
+    # 見出し行
+    for x, w, lines in zip(xs, widths, head_lines):
+        for j, line in enumerate(lines):
+            tw = d.textlength(line, font=head_font)
+            d.text((x + (w - tw) / 2, top + cp + j * _lh(head_font)), line, font=head_font, fill=NAVY)
+
+    # データ行
+    ry = top + head_h
+    for r, (cells, row_h) in enumerate(row_layouts):
+        if r > 0:
+            d.line((PAD + 16, ry, PAD + inner - 16, ry), fill=LINE, width=2)
+        for i, ((kind, content), x, w) in enumerate(zip(cells, xs, widths)):
+            if kind == "symbol":
+                tw = d.textlength(content, font=symbol_font)
+                d.text((x + (w - tw) / 2, ry + (row_h - _lh(symbol_font, 1.1)) / 2), content,
+                       font=symbol_font, fill=SYMBOL_COLORS[content])
+                continue
+            font = label_font if i == 0 else body_font
+            color = SUBTLE if i == 0 else TEXT
+            block_h = len(content) * _lh(font)
+            for j, line in enumerate(content):
+                tw = d.textlength(line, font=font)
+                tx = x + cp if i == 0 else x + (w - tw) / 2
+                d.text((tx, ry + (row_h - block_h) / 2 + j * _lh(font)), line, font=font, fill=color)
+        ry += row_h
+    return bottom + 36
 
 
-def _layout_checklist(c: _Canvas, measure, items: list[str]) -> None:
-    font = _font("regular", 36)
-    mark_font = _font("bold", 36)
-    lh = _line_height(font)
-    indent = 64
-    for item in items:
-        lines = _wrap(measure, item, font, WIDTH - PADDING * 2 - indent)
-        c.add("text", (PADDING, c.y), "✓", mark_font, ACCENT)
-        for i, line in enumerate(lines):
-            c.add("text", (PADDING + indent, c.y + lh * i), line, font, TEXT)
-        c.y += lh * len(lines) + 18
-    c.y += PADDING // 2
+def _draw_checklist(d, y: int, items: list[str]) -> int:
+    font = _font("medium", 36)
+    num_font = _font("bold", 30)
+    lh = _lh(font)
+    for n, item in enumerate(items, 1):
+        lines = _wrap(d, item, font, WIDTH - PAD * 2 - 130)
+        h = max(len(lines) * lh, 64) + 36
+        d.rounded_rectangle((PAD, y, WIDTH - PAD, y + h), radius=18, fill=CARD, outline=LINE, width=2)
+        cy = y + h / 2
+        d.ellipse((PAD + 28, cy - 28, PAD + 84, cy + 28), fill=ORANGE)
+        num = str(n)
+        d.text((PAD + 56 - d.textlength(num, font=num_font) / 2, cy - 22), num, font=num_font, fill=(255, 255, 255))
+        ty = y + (h - len(lines) * lh) / 2 + 6
+        for j, line in enumerate(lines):
+            d.text((PAD + 112, ty + j * lh), line, font=font, fill=TEXT)
+        y += h + 16
+    return y + 20
 
 
-def _layout_footer(c: _Canvas, measure, note: str) -> None:
-    if not note:
-        return
-    font = _font("regular", 24)
-    lh = _line_height(font)
-    for line in _wrap(measure, note, font, WIDTH - PADDING * 2):
-        c.add("text", (PADDING, c.y), line, font, SUBTLE)
-        c.y += lh
-    c.y += PADDING // 2
-
-
-def render(spec: dict, out_path: Path) -> Path:
-    """spec: {kind: "table"|"checklist", title, headers, rows, items, note}"""
-    measure = ImageDraw.Draw(Image.new("RGB", (1, 1)))
-    c = _Canvas()
-    _layout_header(c, measure, spec["title"])
-    if spec["kind"] == "table":
-        _layout_table(c, measure, spec.get("headers", []), spec.get("rows", []))
+def _draw_number(d, y: int, big_text: str, caption: str) -> int:
+    inner = WIDTH - PAD * 2
+    size = 150
+    font = _font("bold", size)
+    while d.textlength(big_text, font=font) > inner - 60 and size > 60:
+        size -= 10
+        font = _font("bold", size)
+    h = _lh(font, 1.15) + 60
+    d.rounded_rectangle((PAD, y, WIDTH - PAD, y + h), radius=24, fill=CARD, outline=LINE, width=2)
+    # 「A → B」は A を灰色、B をオレンジで
+    parts = big_text.split("→", 1)
+    total = d.textlength(big_text, font=font)
+    x = PAD + (inner - total) / 2
+    ty = y + 24
+    if len(parts) == 2:
+        left, right = parts[0], "→" + parts[1]
+        d.text((x, ty), left, font=font, fill=SUBTLE)
+        d.text((x + d.textlength(left, font=font), ty), right, font=font, fill=ORANGE)
     else:
-        _layout_checklist(c, measure, spec.get("items", []))
-    _layout_footer(c, measure, spec.get("note", ""))
+        d.text((x, ty), big_text, font=font, fill=ORANGE)
+    y += h + 20
+    if caption:
+        cap_font = _font("bold", 42)
+        for line in _wrap(d, caption, cap_font, inner):
+            d.text((PAD + (inner - d.textlength(line, font=cap_font)) / 2, y), line, font=cap_font, fill=NAVY)
+            y += _lh(cap_font)
+    return y + 28
 
-    height = min(max(int(c.y + PADDING // 2), MIN_HEIGHT), MAX_HEIGHT)
-    img = Image.new("RGB", (WIDTH, height), BG)
-    draw = ImageDraw.Draw(img)
-    for op in c.ops:
-        if op[0] == "rect":
-            draw.rectangle(op[1], fill=op[2])
-        else:
-            _, xy, text, font, fill = op
-            draw.text(xy, text, font=font, fill=fill)
+
+def _draw_conclusion(d, y: int, text: str) -> int:
+    if not text:
+        return y
+    label_font = _font("bold", 30)
+    font = _font("bold", 38)
+    label = "結論"
+    lw = d.textlength(label, font=label_font) + 36
+    lines = _wrap(d, text, font, WIDTH - PAD * 2 - lw - 60)
+    h = max(len(lines) * _lh(font), 60) + 40
+    d.rounded_rectangle((PAD, y, WIDTH - PAD, y + h), radius=18, fill=NAVY)
+    d.rounded_rectangle((PAD + 20, y + h / 2 - 24, PAD + 20 + lw, y + h / 2 + 24), radius=12, fill=ORANGE)
+    d.text((PAD + 38, y + h / 2 - 20), label, font=label_font, fill=(255, 255, 255))
+    ty = y + (h - len(lines) * _lh(font)) / 2
+    for j, line in enumerate(lines):
+        d.text((PAD + lw + 44, ty + j * _lh(font)), line, font=font, fill=(255, 255, 255))
+    return y + h + 28
+
+
+def _draw_footer(d, y: int, note: str) -> int:
+    note_font = _font("regular", 24)
+    brand_font = _font("bold", 26)
+    if note:
+        d.text((PAD, y), note, font=note_font, fill=SUBTLE)
+    bw = d.textlength(BRAND, font=brand_font)
+    d.rectangle((WIDTH - PAD - bw - 26, y + 8, WIDTH - PAD - bw - 12, y + 22), fill=ORANGE)
+    d.text((WIDTH - PAD - bw, y), BRAND, font=brand_font, fill=NAVY)
+    return y + 44
+
+
+def render(spec: dict, out_path: Path, tag: str = "") -> Path:
+    """spec: ImageSpec（generate.py）を dict にしたもの。kind は table / checklist / number。"""
+    # 高さが決まる前に大きめのキャンバスへ描き、最後に使った分だけ切り出す
+    img = Image.new("RGB", (WIDTH, MAX_HEIGHT * 2), BG)
+    d = ImageDraw.Draw(img)
+    y = _draw_title(d, PAD, tag, spec["title"], spec.get("highlight", ""))
+    if spec["kind"] == "table":
+        y = _draw_table(d, y, spec.get("headers", []), spec.get("rows", []), spec.get("recommend_col", -1))
+    elif spec["kind"] == "checklist":
+        y = _draw_checklist(d, y, spec.get("items", []))
+    elif spec["kind"] == "number":
+        y = _draw_number(d, y, spec.get("big_text", ""), spec.get("caption", ""))
+    y = _draw_conclusion(d, y, spec.get("conclusion", ""))
+    y = _draw_footer(d, max(y, MIN_HEIGHT - PAD - 44), spec.get("note", ""))
+    height = min(max(y + PAD - 20, MIN_HEIGHT), MAX_HEIGHT)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    img.save(out_path, "PNG", optimize=True)
+    img.crop((0, 0, WIDTH, height)).save(out_path, "PNG", optimize=True)
     return out_path

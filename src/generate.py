@@ -2,7 +2,8 @@
 
 1. 調査: Claude が Web 検索で新製品・セール・話題を調べ、出典付きのメモにまとめる
 2. 執筆: メモの事実だけを使って必要数の 2 倍の候補を書き、自己採点する
-3. 選抜: 点数の高い順に必要数だけ残し、図解が指定されたものは画像を描く
+3. 編集: 「中の人」目線で、人が書いたように読める文章へ書き直して採点し直す
+4. 選抜: AI っぽい言い回しが残るものを除き、点数の高い順に必要数だけ残して図解を描く
 
 環境変数:
     ANTHROPIC_API_KEY  Claude API のキー（必須）
@@ -42,14 +43,21 @@ IMAGES_DIR = QUEUE_PATH.parent / "images"
 
 
 class ImageSpec(BaseModel):
-    kind: Literal["none", "table", "checklist"] = Field(
-        description="none=画像なし, table=比較表, checklist=チェックリスト"
+    kind: Literal["none", "table", "checklist", "number"] = Field(
+        description="none=画像なし, table=比較表, checklist=チェックリスト, number=大きな数字 1 つを見せるカード"
     )
-    title: str = Field(description="画像の見出し（20 文字前後）。none のときは空文字")
-    headers: list[str] = Field(description="table の列見出し（2〜4 列）。それ以外は空")
-    rows: list[list[str]] = Field(description="table の行（3〜6 行、1 セル 15 文字以内）。それ以外は空")
-    items: list[str] = Field(description="checklist の項目（3〜6 個、1 項目 25 文字以内）。それ以外は空")
-    note: str = Field(description="画像下部の注記（価格の時点、出典名など）。不要なら空文字")
+    title: str = Field(description="画像の見出し。話し言葉で 18 文字以内（例: 結局どっち買えばいい？）。none のときは空文字")
+    highlight: str = Field(description="見出しの中で黄色マーカーを引く語句（見出しに含まれる文字列）。なければ空文字")
+    headers: list[str] = Field(description="table の列見出し（2〜4 列、左端は項目名の列）。それ以外は空")
+    rows: list[list[str]] = Field(
+        description="table の行（3〜5 行、1 セル 12 文字以内）。評価は ◎ ○ △ × の記号 1 文字だけのセルにすると見やすい。それ以外は空"
+    )
+    recommend_col: int = Field(description="table でおすすめの列の番号（0 始まり、左端の項目名列は 0）。なければ -1")
+    items: list[str] = Field(description="checklist の項目（3〜5 個、1 項目 22 文字以内、話し言葉）。それ以外は空")
+    big_text: str = Field(description="number の大きな数字（例: 90h → 135h、400万点、-4,000円）。それ以外は空文字")
+    caption: str = Field(description="number の数字の下に添える一言（20 文字以内）。それ以外は空文字")
+    conclusion: str = Field(description="画像の一番下に出す一言の結論（22 文字以内、話し言葉）。なければ空文字")
+    note: str = Field(description="価格の時点など最小限の注記（例: 価格は9/29時点）。なければ空文字")
 
 
 class Draft(BaseModel):
@@ -82,26 +90,67 @@ Web 検索で、今日投稿するネタになる最新情報を集め、執筆�
 
 WRITER_SYSTEM = f"""あなたはガジェット・便利グッズ専門の X アカウントの執筆担当です。
 運用方針と調査メモをもとに、そのまま投稿できる日本語の投稿を書きます。
+運用方針の「語り口」を必ず守ってください。ニュース記事や AI の回答文のような文章は不合格です。
 
 守ること:
 - 製品名・スペック・価格などの事実は、調査メモに出典付きで書かれているものだけを使う
-- 価格を書くときは「〇/〇時点」を添える
-- 実際に使った体験談のような一人称の感想は書かない（「使ってみた」「買ってよかった」など）
-- 1 投稿は半角換算 {MAX_WEIGHTED_LENGTH} 以内。冒頭 1〜2 行だけで読む価値が伝わるようにする
+- 実際に使った体験談のような一人称の使用感は書かない（「使ってみた」「買ってよかった」など）
+- 1 投稿は半角換算 {MAX_WEIGHTED_LENGTH} 以内。冒頭 1 行だけで読む理由が伝わるようにする
 - 煽り、誇大表現、エンゲージメント稼ぎ（「いいねで〇〇」など）、ハッシュタグの乱用はしない
 - リンクは本文に入れない
 - 過去の投稿と内容や言い回しを重ねない
 - 同じ製品・同じイベント（セールなど）を扱う候補は最大 2 本まで。ネタを散らす
-- 「価格は各自確認を」「価格は未確認」のような、読者に役立たない一文や注記は書かない
+- 「価格は各自確認を」のような、読者に役立たない一文は書かない
 
 図解（image）:
-- 比較や〇〇選は table、失敗あるある・チェックポイントは checklist にすると効果的
-- 本文だけで伝わる投稿や問いかけは none
+- 比較・〇〇選は table、失敗あるある・チェックポイントは checklist、
+  「90時間→135時間」「400万点」のように数字 1 つが主役のネタは number
+- 本文だけで伝わる投稿、短い投稿、問いかけは none（全体の 3〜4 割は none でよい）
+- 見出し・結論・項目も話し言葉で。カタログのような文言にしない。絵文字は使わない
 - 図解の中身も調査メモの事実だけで作る
 
 採点（score）:
-- 10 = 思わず保存・共有したくなる具体的で新しい情報。5 = どこかで見た一般論。
+- 10 = 思わず保存・共有したくなる、具体的で新しく、人が書いたように読める投稿
+- 5 = どこかで見た一般論、またはニュース記事・AI っぽい文章
 - 事実の裏付けが弱いもの、ありきたりなものは厳しく低く付ける"""
+
+EDITOR_SYSTEM = f"""あなたはフォロワー 10 万人のガジェット系 X アカウントの「中の人」で、投稿の最終チェック担当です。
+執筆担当が書いた下書きを、人が書いたように読める投稿に書き直します。
+
+やること:
+- 運用方針の「語り口」に合わせて本文を書き直す。報道調・説明書調・AI っぽい言い回しを全部なくす
+- 読者が「へえ」「それ知りたかった」と思う一点を冒頭に出す。情報を詰め込みすぎていたら削る
+- 投稿ごとに形と長さを変える。全部が「冒頭 → 箇条書き → 締め」になっていたら崩す
+- 図解の見出し・項目・結論も話し言葉に直す（事実の中身は変えない）
+- 書き直した結果で score を付け直す。AI っぽさが消えないものは 6 以下にする
+
+変えてはいけないもの:
+- 製品名・数字・日付・価格などの事実（言い方は変えてよい）
+- sources
+- 使用体験の作り話を足さない
+- 半角換算 {MAX_WEIGHTED_LENGTH} 以内"""
+
+# 残っていたら AI っぽい文章とみなして除外する言い回し
+BANNED_PHRASES = (
+    "しましょう",
+    "得策",
+    "重要です",
+    "と言えるでしょう",
+    "が挙げられます",
+    "に最適",
+    "必見",
+    "注目です",
+    "ご存知",
+    "知っていますか",
+    "いかがでしたか",
+    "解説します",
+    "まとめると",
+    "することで",
+    "な方におすすめ",
+    "取りこぼし",
+    "選び分けられます",
+    "用途で分かれます",
+)
 
 
 def _request(client: anthropic.Anthropic, **kwargs):
@@ -171,16 +220,32 @@ def write_drafts(
 
 # 依頼
 投稿の候補を {count} 本書いてください。型が偏らないようにし、各候補を厳しめに採点してください。"""
+    return _drafts_request(client, WRITER_SYSTEM, user_msg, "執筆")
+
+
+def edit_drafts(client: anthropic.Anthropic, strategy: str, drafts: list[Draft]) -> list[Draft]:
+    user_msg = f"""# 運用方針
+{strategy}
+
+# 下書き（JSON）
+{Drafts(posts=drafts).model_dump_json(indent=2)}
+
+# 依頼
+すべての下書きを書き直し、同じ本数・同じ順番で返してください。"""
+    return _drafts_request(client, EDITOR_SYSTEM, user_msg, "編集")
+
+
+def _drafts_request(client: anthropic.Anthropic, system: str, user_msg: str, label: str) -> list[Draft]:
     response = _request(
         client,
-        system=WRITER_SYSTEM,
+        system=system,
         messages=[{"role": "user", "content": user_msg}],
         output_format=Drafts,
     )
     if response.stop_reason == "refusal":
-        raise RuntimeError("執筆が断られました")
+        raise RuntimeError(f"{label}が断られました")
     if response.parsed_output is None:
-        raise RuntimeError(f"投稿案を読み取れませんでした（stop_reason={response.stop_reason}）")
+        raise RuntimeError(f"{label}結果を読み取れませんでした（stop_reason={response.stop_reason}）")
     return response.parsed_output.posts
 
 
@@ -204,6 +269,7 @@ def main() -> int:
         memo = research(client, strategy, recent)
         print("---- 調査メモ ----\n" + memo + "\n------------------")
         drafts = write_drafts(client, strategy, memo, recent, needed * 2)
+        drafts = edit_drafts(client, strategy, drafts)
     except anthropic.AuthenticationError:
         print("ANTHROPIC_API_KEY が無効です。", file=sys.stderr)
         return 1
@@ -223,8 +289,11 @@ def main() -> int:
     candidates = []
     for d in drafts:
         text = d.text.strip()
+        banned = [w for w in BANNED_PHRASES if w in text]
         if not text or weighted_length(text) > MAX_WEIGHTED_LENGTH:
             print(f"長さが条件外のため除外: {text[:30]}…")
+        elif banned:
+            print(f"AI っぽい言い回し（{'、'.join(banned)}）のため除外: {text[:30]}…")
         elif d.score < MIN_SCORE:
             print(f"点数 {d.score} のため除外: {text[:30]}…")
         else:
@@ -244,7 +313,7 @@ def main() -> int:
             "created_at": now_jst(),
         }
         if d.image.kind != "none":
-            path = render(d.image.model_dump(), IMAGES_DIR / f"{post_id}.png")
+            path = render(d.image.model_dump(), IMAGES_DIR / f"{post_id}.png", tag=d.category)
             entry["image"] = str(path.relative_to(QUEUE_PATH.parent.parent))
         queue.append(entry)
         added += 1
