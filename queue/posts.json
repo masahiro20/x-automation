@@ -101,9 +101,11 @@
     "sources": [
       "https://news.mynavi.jp/article/20260928-5040698/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-09-28T18:24:09+09:00",
-    "image": "queue/images/69d1fb6f0198.png"
+    "image": "queue/images/69d1fb6f0198.png",
+    "posted_at": "2026-09-29T09:27:19+09:00",
+    "tweet_id": "2104729700111442431"
   },
   {
     "id": "f6bf483ea72f",
