@@ -175,5 +175,78 @@
     "created_at": "2026-09-29T09:21:47+09:00",
     "image": "queue/images/29104d545c56.png",
     "error": "文体が硬い・AI っぽいため、新しい書き方で作り直し"
+  },
+  {
+    "id": "76ee234d4c29",
+    "text": "マウス買い替える前に、アップデートの案内だけ見てほしいです。\n\nロジクールGがG502 X PLUSに新色（ダークライラック／ミントグリーン）を追加。で、同じタイミングで既存モデルにもHERO 44Kセンサー化の無償ファームウェア更新が出てます。\n\n今持ってる人は0円で中身が上がる。これ知らずに買い替えるの、もったいなくないですか。",
+    "category": "使いこなし",
+    "score": 9,
+    "sources": [
+      "https://www.itmedia.co.jp/pcuser/articles/2609/25/news097.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:13+09:00",
+    "image": "queue/images/76ee234d4c29.png"
+  },
+  {
+    "id": "f6e35159757f",
+    "text": "同じ日に出るのに、上と下で4倍以上ちがうんですよね。\n\n10/15発売のロジクールG PRO X。\nいちばん下のCONTROLが9,900円で、上のLIGHTSPEEDが40,480円。あいだにSUPERSTRIKE(32,450円)とX2 RAPID(35,750円)。\n\n名前が似すぎてるので、ポチる前に型番だけは見ておいてください(税込・想定売価)",
+    "category": "比較",
+    "score": 8,
+    "sources": [
+      "https://www.gdm.or.jp/crew/2026/0924/653591"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:14+09:00",
+    "image": "queue/images/f6e35159757f.png"
+  },
+  {
+    "id": "e9edb159f868",
+    "text": "マイクのつまみ、もういじらなくていいかもしれません。\n\n10/15に出るYeti 2、ボイス近接センサーが声を検知して、ゲインもEQも指向性も自動で合わせてくれます。録音は24bit/48kHz、3カプセルアレイ。税込26,180円（想定売価）。\n\n音質より、設定で挫折した人にこそ効く変化だと思う。",
+    "category": "速報",
+    "score": 8,
+    "sources": [
+      "https://www.gdm.or.jp/crew/2026/0924/653591",
+      "https://game.watch.impress.co.jp/docs/news/2142695.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:14+09:00",
+    "image": "queue/images/e9edb159f868.png"
+  },
+  {
+    "id": "648c99571197",
+    "text": "ロジクールGの新作、いちばん安いのは1万円切りです。\n\nPRO X CONTROL → 税込9,900円（想定売価）。10/15発売。\n\n兄弟機が32,450〜40,480円なので、この価格帯に1本あるの地味にうれしい。",
+    "category": "速報",
+    "score": 7,
+    "sources": [
+      "https://www.gdm.or.jp/crew/2026/0924/653591"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:14+09:00",
+    "image": "queue/images/648c99571197.png"
+  },
+  {
+    "id": "2ff69fe251b4",
+    "text": "マイクの調子が、キャラの表情でわかるらしいです。\n\n10/15発売のYeti 2、本体のディスプレイに音声レベルが出て、Yetiのキャラの顔で状態が変わる作り。AIノイズリダクションも入ってます。\n\n声が小さすぎ・大きすぎを目で確認できるの、配信はじめたての人にはかなり親切かも。",
+    "category": "使いこなし",
+    "score": 7,
+    "sources": [
+      "https://game.watch.impress.co.jp/docs/news/2142695.html",
+      "https://www.gdm.or.jp/crew/2026/0924/653591"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:14+09:00"
+  },
+  {
+    "id": "eeda30bcc417",
+    "text": "「新色が出た＝中身も新しい」とは限らないんですよね。\n\nG502 X PLUSがまさにそれで、新色が追加されたのと同じタイミングで、既存モデルにも44Kセンサー化の無償更新が来てます。\n\n買い替えボタンを押す前に、まず更新の有無から。",
+    "category": "失敗あるある",
+    "score": 7,
+    "sources": [
+      "https://www.itmedia.co.jp/pcuser/articles/2609/25/news097.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:14+09:00",
+    "image": "queue/images/eeda30bcc417.png"
   }
 ]
