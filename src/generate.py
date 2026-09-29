@@ -127,6 +127,7 @@ WRITER_SYSTEM = f"""あなたはガジェット・便利グッズ専門の X ア
 - 本文だけで伝わる投稿、短い投稿、問いかけは none（全体の 3〜4 割は none でよい）
 - 見出し・結論・項目も話し言葉で。カタログのような文言にしない。絵文字は使わない
 - number は「90h → 135h」「倍の400万点」のように変化や驚きがある数字にだけ使う。ただの価格 1 つには使わない
+- 「最大」「約」「想定」などの条件は、図解でも省かない
 - conclusion は事実の繰り返しではなく「だからどうする」の一言（例: 音量いじらないなら下位でOK）
 - table は同じ種類の製品同士だけを並べる（マウスとキーボードを同じ表で比べない）
 - 図解の中身も調査メモの事実だけで作る
@@ -376,8 +377,18 @@ def main() -> int:
         per_topic[key] = per_topic.get(key, 0) + 1
         selected.append(d)
 
+    # 同じ topic の投稿が続かないように並べる（直前の投稿待ちも考慮）
+    last_topic = queued[-1].get("topic", "") if queued else ""
+    ordered: list[Draft] = []
+    pool = selected[:needed]
+    while pool:
+        pick = next((d for d in pool if d.topic != last_topic), pool[0])
+        pool.remove(pick)
+        ordered.append(pick)
+        last_topic = pick.topic
+
     added = 0
-    for d in selected[:needed]:
+    for d in ordered:
         post_id = uuid.uuid4().hex[:12]
         entry = {
             "id": post_id,
@@ -392,6 +403,7 @@ def main() -> int:
         if d.image.kind != "none":
             path = render(d.image.model_dump(), IMAGES_DIR / f"{post_id}.png", tag=d.category)
             entry["image"] = str(path.relative_to(QUEUE_PATH.parent.parent))
+            entry["image_spec"] = d.image.model_dump()  # 後から直して描き直せるように残す
         queue.append(entry)
         added += 1
 

@@ -203,18 +203,6 @@
     "error": "種類の違う製品を同じ表で比べており、結論が誤解を招く"
   },
   {
-    "id": "e9edb159f868",
-    "text": "マイクのつまみ、もういじらなくていいかもしれません。\n\n10/15に出るYeti 2、ボイス近接センサーが声を検知して、ゲインもEQも指向性も自動で合わせてくれます。録音は24bit/48kHz、3カプセルアレイ。税込26,180円（想定売価）。\n\n音質より、設定で挫折した人にこそ効く変化だと思う。",
-    "category": "速報",
-    "score": 8,
-    "sources": [
-      "https://www.gdm.or.jp/crew/2026/0924/653591",
-      "https://game.watch.impress.co.jp/docs/news/2142695.html"
-    ],
-    "status": "queued",
-    "created_at": "2026-09-29T09:46:14+09:00"
-  },
-  {
     "id": "648c99571197",
     "text": "ロジクールGの新作、いちばん安いのは1万円切りです。\n\nPRO X CONTROL → 税込9,900円（想定売価）。10/15発売。\n\n兄弟機が32,450〜40,480円なので、この価格帯に1本あるの地味にうれしい。",
     "category": "速報",
@@ -254,6 +242,18 @@
     "error": "「無償」は出典に記載なし"
   },
   {
+    "id": "e9edb159f868",
+    "text": "マイクのつまみ、もういじらなくていいかもしれません。\n\n10/15に出るYeti 2、ボイス近接センサーが声を検知して、ゲインもEQも指向性も自動で合わせてくれます。録音は24bit/48kHz、3カプセルアレイ。税込26,180円（想定売価）。\n\n音質より、設定で挫折した人にこそ効く変化だと思う。",
+    "category": "速報",
+    "score": 8,
+    "sources": [
+      "https://www.gdm.or.jp/crew/2026/0924/653591",
+      "https://game.watch.impress.co.jp/docs/news/2142695.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T09:46:14+09:00"
+  },
+  {
     "id": "72176f827a62",
     "text": "ロボット掃除機、進化してるのは吸引力じゃなくて「隅」でした。\n\n10/2発売のRoborock Qrevo 2 Pro。サイドブラシが部屋の隅を検知すると、回転の向きを勝手に切り替えます。これで四隅のカバー率が従来比で最大30%アップ。吸引は25,000Pa。\n\n想定16万4,780円。売り場はヤマダデンキとヤマダウェブコムで、予約は9/24から。\n\n部屋の角のホコリ、あれが一番イラッとするやつなんですよね",
     "category": "速報",
@@ -267,18 +267,16 @@
     "image": "queue/images/72176f827a62.png"
   },
   {
-    "id": "df38599c6c3b",
-    "text": "ロボット掃除機、「全部入り」と「小さい」でもう別ジャンルです。\n\n全部入り → Roborock Qrevo 2 Pro（10/2発売）\n四隅のカバー率が従来比で最大30%、吸引25,000Pa、想定16万4,780円。\n\n小さい → iRobot Roomba Mini\n日本法人の発案で日本が先行発売。サイズは従来ルンバの約半分で、Wi-Fiがなくてもボタンひとつで走ります。\n\n1台目か、2台目か。ここで見るところがごっそり変わります",
-    "category": "比較",
-    "topic": "Roborock",
-    "score": 8,
+    "id": "423f4f2973b2",
+    "text": "落とし物タグ、Androidだから諦めてた人いません？\n\nAnkerのEufyから「SmartTrack Card E40」。カード型でiOS・Android両対応、そのうえワイヤレス充電に対応してます。\n\n充電できる＝電池切れたら終わり、じゃない。財布に入れっぱなしにするならこれ、かなりアリだと思います",
+    "category": "速報",
+    "topic": "Anker",
+    "score": 7,
     "sources": [
-      "https://kaden.watch.impress.co.jp/docs/news/2143288.html",
-      "https://www.irobot-jp.com/press/pdf/20260219.pdf"
+      "https://corp.ankerjapan.com/news"
     ],
     "status": "queued",
-    "created_at": "2026-09-29T09:57:52+09:00",
-    "image": "queue/images/df38599c6c3b.png"
+    "created_at": "2026-09-29T09:57:52+09:00"
   },
   {
     "id": "873a87324444",
@@ -293,16 +291,18 @@
     "created_at": "2026-09-29T09:57:52+09:00"
   },
   {
-    "id": "423f4f2973b2",
-    "text": "落とし物タグ、Androidだから諦めてた人いません？\n\nAnkerのEufyから「SmartTrack Card E40」。カード型でiOS・Android両対応、そのうえワイヤレス充電に対応してます。\n\n充電できる＝電池切れたら終わり、じゃない。財布に入れっぱなしにするならこれ、かなりアリだと思います",
-    "category": "速報",
-    "topic": "Anker",
-    "score": 7,
+    "id": "df38599c6c3b",
+    "text": "ロボット掃除機、「全部入り」と「小さい」でもう別ジャンルです。\n\n全部入り → Roborock Qrevo 2 Pro（10/2発売）\n四隅のカバー率が従来比で最大30%、吸引25,000Pa、想定16万4,780円。\n\n小さい → iRobot Roomba Mini\n日本法人の発案で日本が先行発売。サイズは従来ルンバの約半分で、Wi-Fiがなくてもボタンひとつで走ります。\n\n1台目か、2台目か。ここで見るところがごっそり変わります",
+    "category": "比較",
+    "topic": "Roborock",
+    "score": 8,
     "sources": [
-      "https://corp.ankerjapan.com/news"
+      "https://kaden.watch.impress.co.jp/docs/news/2143288.html",
+      "https://www.irobot-jp.com/press/pdf/20260219.pdf"
     ],
     "status": "queued",
-    "created_at": "2026-09-29T09:57:52+09:00"
+    "created_at": "2026-09-29T09:57:52+09:00",
+    "image": "queue/images/df38599c6c3b.png"
   },
   {
     "id": "0f660bc94264",
