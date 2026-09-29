@@ -28,8 +28,13 @@ def test_late_run_inside_window_is_still_due():
     assert due_slot(at(9, 50), []) == at(7, 30)
 
 
-def test_after_window_is_not_due():
-    assert due_slot(at(10, 5), []) is None
+def test_late_run_before_next_slot_still_catches_up():
+    assert due_slot(at(11, 50), []) == at(7, 30)
+
+
+def test_last_slot_lasts_until_midnight_only():
+    assert due_slot(at(23, 55), []) == at(21, 0)
+    assert due_slot(datetime(2026, 9, 30, 0, 10, tzinfo=JST), []) is None
 
 
 def test_already_posted_in_slot_is_not_due():

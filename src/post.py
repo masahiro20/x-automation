@@ -5,7 +5,7 @@ GitHub Actions の定期実行は数時間遅れることがあるため、投�
 
 環境変数:
     POSTING_ENABLED        "false" にすると一時停止（内容を表示するだけ）。未設定なら投稿する
-    FORCE_POST             "true" なら時間帯に関係なく投稿する（手動実行用）
+    FORCE_POST             "true" なら時間帯に関係なく投稿する（手動実行で force を選んだとき）
     X_API_KEY / X_API_SECRET / X_ACCESS_TOKEN / X_ACCESS_TOKEN_SECRET
                            X Developer Portal で発行したキー（Read and Write 権限）
 """
@@ -24,17 +24,18 @@ from common import JST, ROOT, load_queue, now_jst, save_queue
 X_ENV_KEYS = ("X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_TOKEN_SECRET")
 MEDIA_UPLOAD_URL = "https://api.x.com/2/media/upload"
 
-# 投稿枠（日本時間）。post.yml の cron はこの枠の開始から WINDOW の間をカバーする
+# 投稿枠（日本時間）。各枠は次の枠が始まるまで有効（最後の枠は日付が変わるまで）。
+# 定期実行が遅れても、次の枠までに 1 回でも動けば取りこぼさない
 SLOTS = (time(7, 30), time(12, 15), time(21, 0))
-WINDOW = timedelta(minutes=150)
 
 
 def due_slot(now: datetime, queue: list[dict]) -> datetime | None:
     """今が投稿枠の中で、その枠でまだ投稿していなければ枠の開始時刻を返す。"""
     posted_times = [datetime.fromisoformat(p["posted_at"]) for p in queue if p.get("posted_at")]
-    for slot in SLOTS:
-        start = datetime.combine(now.date(), slot, tzinfo=JST)
-        if start <= now < start + WINDOW and not any(start <= t <= now for t in posted_times):
+    starts = [datetime.combine(now.date(), slot, tzinfo=JST) for slot in SLOTS]
+    ends = starts[1:] + [datetime.combine(now.date() + timedelta(days=1), time(0, 0), tzinfo=JST)]
+    for start, end in zip(starts, ends):
+        if start <= now < end and not any(start <= t <= now for t in posted_times):
             return start
     return None
 

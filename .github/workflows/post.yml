@@ -2,12 +2,16 @@ name: X に投稿
 
 on:
   schedule:
-    # GitHub の定期実行は遅れることがあるので、投稿枠（7:30 / 12:15 / 21:00 JST）から
-    # 2 時間半の間は 15 分おきに起動する。投稿するかは src/post.py が枠を見て判断する
-    - cron: "*/15 22,23,0 * * *" # 7:00〜9:59 JST
-    - cron: "*/15 3,4,5 * * *" # 12:00〜14:59 JST
-    - cron: "*/15 12,13,14 * * *" # 21:00〜23:59 JST
+    # GitHub の定期実行は大きく遅れたり飛ばされたりするので、7:00〜24:00 JST の間 30 分おきに起動する。
+    # 投稿するかは src/post.py が枠（7:30 / 12:15 / 21:00、それぞれ次の枠まで有効）を見て判断する。
+    # Claude Code のルーティンも 7:35 / 12:35 / 21:35 にこのワークフローを起動する
+    - cron: "*/30 22,23,0-14 * * *"
   workflow_dispatch:
+    inputs:
+      force:
+        description: "時間帯に関係なく今すぐ 1 本投稿する"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -30,7 +34,7 @@ jobs:
         run: python src/post.py
         env:
           POSTING_ENABLED: ${{ vars.POSTING_ENABLED }}
-          FORCE_POST: ${{ github.event_name == 'workflow_dispatch' }}
+          FORCE_POST: ${{ inputs.force }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
