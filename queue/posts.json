@@ -242,6 +242,71 @@
     "error": "「無償」は出典に記載なし"
   },
   {
+    "id": "72176f827a62",
+    "text": "ロボット掃除機、進化してるのは吸引力じゃなくて「隅」でした。\n\n10/2発売のRoborock Qrevo 2 Pro。サイドブラシが部屋の隅を検知すると、回転の向きを勝手に切り替えます。これで四隅のカバー率が従来比で最大30%アップ。吸引は25,000Pa。\n\n想定16万4,780円。売り場はヤマダデンキとヤマダウェブコムで、予約は9/24から。\n\n部屋の角のホコリ、あれが一番イラッとするやつなんですよね",
+    "category": "速報",
+    "topic": "Roborock",
+    "score": 8,
+    "sources": [
+      "https://kaden.watch.impress.co.jp/docs/news/2143288.html"
+    ],
+    "status": "skipped",
+    "created_at": "2026-09-29T09:57:51+09:00",
+    "image": "queue/images/72176f827a62.png",
+    "error": "ニュース紹介だけの投稿のため、買い判断の投稿（Claude Code 手書き）に差し替え"
+  },
+  {
+    "id": "423f4f2973b2",
+    "text": "落とし物タグ、Androidだから諦めてた人いません？\n\nAnkerのEufyから「SmartTrack Card E40」。カード型でiOS・Android両対応、そのうえワイヤレス充電に対応してます。\n\n充電できる＝電池切れたら終わり、じゃない。財布に入れっぱなしにするならこれ、かなりアリだと思います",
+    "category": "速報",
+    "topic": "Anker",
+    "score": 7,
+    "sources": [
+      "https://corp.ankerjapan.com/news"
+    ],
+    "status": "skipped",
+    "created_at": "2026-09-29T09:57:52+09:00",
+    "error": "同上"
+  },
+  {
+    "id": "0f660bc94264",
+    "text": "Soundcoreのイヤホン、そのうち名前が変わります。\n\nAnkerがPower Conference 2026で、SoundcoreとEufyを年内をめどにAnkerへ統合すると発表。ロゴも新しいAnkerブランドのものに。\n\n製品が消える話じゃないです。ただ、ブランド名で検索して買うタイプの人はちょっと戸惑うかも。頭の隅に置いとくと楽です",
+    "category": "速報",
+    "topic": "Anker",
+    "score": 7,
+    "sources": [
+      "https://www.ankerjapan.com/pages/anker-power-conference-26",
+      "https://www.lifehacker.jp/article/2605-lht-anker-power-conference-2026/"
+    ],
+    "status": "skipped",
+    "created_at": "2026-09-29T09:57:52+09:00",
+    "image": "queue/images/0f660bc94264.png",
+    "error": "同上"
+  },
+  {
+    "id": "0abe8dc3757e",
+    "text": "【買う前にちょっと待って】\nイヤホンとか充電器、今週ポチろうとしてる人。\nそれ、2週間だけ待って。\n\n10/13からAmazonのプライム感謝祭です。\n先行 → 10/13〜15\n本番 → 10/16〜19\n\n対象は去年の200万点以上から、今年は400万点以上。\n「そのうち買う」ものは、いまはカートに入れとくだけでOK\n※プライム会員限定",
+    "category": "買う前にちょっと待って",
+    "topic": "プライム感謝祭",
+    "sources": [
+      "https://press.aboutamazon.com/jp/2026/9/prime-appreciation-sale-2026"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T16:14:41+09:00",
+    "author": "claude-code",
+    "image": "queue/images/0abe8dc3757e.png",
+    "image_spec": {
+      "kind": "number",
+      "title": "イヤホンと充電器、今は待って",
+      "highlight": "今は待って",
+      "verdict": "待ち",
+      "big_text": "10/13〜19",
+      "caption": "Amazonプライム感謝祭（先行セール含む）",
+      "conclusion": "欲しいものはカートに入れて待機",
+      "note": "プライム会員限定"
+    }
+  },
+  {
     "id": "e9edb159f868",
     "text": "マイクのつまみ、もういじらなくていいかもしれません。\n\n10/15に出るYeti 2、ボイス近接センサーが声を検知して、ゲインもEQも指向性も自動で合わせてくれます。録音は24bit/48kHz、3カプセルアレイ。税込26,180円（想定売価）。\n\n音質より、設定で挫折した人にこそ効く変化だと思う。",
     "category": "速報",
@@ -254,29 +319,30 @@
     "created_at": "2026-09-29T09:46:14+09:00"
   },
   {
-    "id": "72176f827a62",
-    "text": "ロボット掃除機、進化してるのは吸引力じゃなくて「隅」でした。\n\n10/2発売のRoborock Qrevo 2 Pro。サイドブラシが部屋の隅を検知すると、回転の向きを勝手に切り替えます。これで四隅のカバー率が従来比で最大30%アップ。吸引は25,000Pa。\n\n想定16万4,780円。売り場はヤマダデンキとヤマダウェブコムで、予約は9/24から。\n\n部屋の角のホコリ、あれが一番イラッとするやつなんですよね",
-    "category": "速報",
-    "topic": "Roborock",
-    "score": 8,
+    "id": "7d9fb15b3c57",
+    "text": "感謝祭、エントリーだけ先にやっとくと地味に効きます。\n\nポイントアップはエントリー制で、もう受付中（9/24〜）。\n期間中に合計1万円以上買うと対象になります。\n\nただし上限は1万ポイントで、期間限定ポイント。\n大きい買い物をまとめる人ほど、ここは見とくといいです",
+    "category": "買い時",
+    "topic": "プライム感謝祭",
     "sources": [
-      "https://kaden.watch.impress.co.jp/docs/news/2143288.html"
+      "https://press.aboutamazon.com/jp/2026/9/prime-appreciation-sale-2026"
     ],
     "status": "queued",
-    "created_at": "2026-09-29T09:57:51+09:00",
-    "image": "queue/images/72176f827a62.png"
-  },
-  {
-    "id": "423f4f2973b2",
-    "text": "落とし物タグ、Androidだから諦めてた人いません？\n\nAnkerのEufyから「SmartTrack Card E40」。カード型でiOS・Android両対応、そのうえワイヤレス充電に対応してます。\n\n充電できる＝電池切れたら終わり、じゃない。財布に入れっぱなしにするならこれ、かなりアリだと思います",
-    "category": "速報",
-    "topic": "Anker",
-    "score": 7,
-    "sources": [
-      "https://corp.ankerjapan.com/news"
-    ],
-    "status": "queued",
-    "created_at": "2026-09-29T09:57:52+09:00"
+    "created_at": "2026-09-29T16:14:42+09:00",
+    "author": "claude-code",
+    "image": "queue/images/7d9fb15b3c57.png",
+    "image_spec": {
+      "kind": "checklist",
+      "title": "感謝祭の前にやっとくこと",
+      "highlight": "やっとくこと",
+      "items": [
+        "ポイントアップにエントリー（受付中）",
+        "合計1万円以上で対象になる",
+        "上限は1万ポイント・期間限定",
+        "プライム会員かどうか確認"
+      ],
+      "conclusion": "エントリーは今日やってOK",
+      "note": "Amazon発表（9/24）より"
+    }
   },
   {
     "id": "873a87324444",
@@ -289,6 +355,50 @@
     ],
     "status": "queued",
     "created_at": "2026-09-29T09:57:52+09:00"
+  },
+  {
+    "id": "7a8b6de9bb6b",
+    "text": "AirPods 5、上と下で4,000円ちがうんですけど\n正直、下でいい人のほうが多いと思う。\n\nノイキャンは両方あり。\n上だけにあるのは\n→ 軸をなぞって音量調整\n→ ワイヤレス充電ケース\n→ ノイキャンONで1回最大5時間\n\n音量はiPhoneで変える、充電はケーブルで困ってない。\nそれなら23,800円のほうで十分です（Apple公式価格）",
+    "category": "比較",
+    "topic": "Apple",
+    "sources": [
+      "https://www.apple.com/jp/newsroom/2026/09/apple-introduces-airpods-5-with-best-in-class-open-ear-active-noise-cancellation/"
+    ],
+    "status": "queued",
+    "created_at": "2026-09-29T16:14:41+09:00",
+    "author": "claude-code",
+    "image": "queue/images/7a8b6de9bb6b.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "AirPods 5、上位は見送りでいい",
+      "highlight": "見送りでいい",
+      "verdict": "見送り",
+      "headers": [
+        "",
+        "23,800円",
+        "27,800円"
+      ],
+      "rows": [
+        [
+          "ノイキャン",
+          "◎",
+          "◎"
+        ],
+        [
+          "指で音量調整",
+          "×",
+          "◎"
+        ],
+        [
+          "ワイヤレス充電",
+          "×",
+          "◎"
+        ]
+      ],
+      "recommend_col": 1,
+      "conclusion": "こだわりなければ下で十分",
+      "note": "価格はApple公式（税込）"
+    }
   },
   {
     "id": "df38599c6c3b",
@@ -305,17 +415,40 @@
     "image": "queue/images/df38599c6c3b.png"
   },
   {
-    "id": "0f660bc94264",
-    "text": "Soundcoreのイヤホン、そのうち名前が変わります。\n\nAnkerがPower Conference 2026で、SoundcoreとEufyを年内をめどにAnkerへ統合すると発表。ロゴも新しいAnkerブランドのものに。\n\n製品が消える話じゃないです。ただ、ブランド名で検索して買うタイプの人はちょっと戸惑うかも。頭の隅に置いとくと楽です",
-    "category": "速報",
+    "id": "bfd320187b60",
+    "text": "ノートPCも充電できる充電器、1個目ならAnker Nano II 65Wで迷わなくていいと思う。\n\n65WでMacBookもWindowsのPD対応PCもいける。\n約112gで、プラグは折りたためる。\n\nただ、差し込み口はUSB-Cが1個だけ。ケーブルも別売りです。\nスマホとPCを同時に充電したい人は、ここだけ注意\n（公式ストア4,490円・9/29時点）",
+    "category": "定番",
     "topic": "Anker",
-    "score": 7,
     "sources": [
-      "https://www.ankerjapan.com/pages/anker-power-conference-26",
-      "https://www.lifehacker.jp/article/2605-lht-anker-power-conference-2026/"
+      "https://www.ankerjapan.com/products/a2663"
     ],
     "status": "queued",
-    "created_at": "2026-09-29T09:57:52+09:00",
-    "image": "queue/images/0f660bc94264.png"
+    "created_at": "2026-09-29T16:14:42+09:00",
+    "author": "claude-code",
+    "image": "queue/images/bfd320187b60.png",
+    "image_spec": {
+      "kind": "checklist",
+      "title": "Anker Nano II 65W、買う前に",
+      "highlight": "買う前に",
+      "verdict": "買い",
+      "items": [
+        "65WでノートPCもOK",
+        "約112g・プラグ折りたたみ",
+        "USB-Cは1個だけ",
+        "ケーブルは別売り"
+      ],
+      "conclusion": "1台ずつ充電する人なら買い",
+      "note": "公式ストア4,490円（9/29時点）"
+    }
+  },
+  {
+    "id": "8f84fb2162a0",
+    "text": "感謝祭で狙ってるガジェット、ありますか？\n\nイヤホン？充電器？ロボット掃除機？\nそれとも「特にないけど何か買いたい」派？\n\n返信くれたら、それを今後の「買い／待ち」判定のネタにします",
+    "category": "問いかけ",
+    "topic": "一般",
+    "sources": [],
+    "status": "queued",
+    "created_at": "2026-09-29T16:14:42+09:00",
+    "author": "claude-code"
   }
 ]

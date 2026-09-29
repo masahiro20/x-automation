@@ -101,6 +101,18 @@ def _draw_verdict(img: Image.Image, verdict: str) -> None:
     img.paste(stamp, (WIDTH - PAD - STAMP + 10, PAD - 20), stamp)
 
 
+def _balance(d, text: str, font, max_w: int) -> list[str] | None:
+    """2 行目に 1〜3 文字だけ残る折り返しを避ける。「、」の後ろ、なければ真ん中あたりで分ける。"""
+    candidates = [i + 1 for i, ch in enumerate(text) if ch in "、，,"]
+    mid = len(text) // 2
+    candidates += sorted(range(1, len(text)), key=lambda i: abs(i - mid))
+    for i in candidates:
+        a, b = text[:i], text[i:]
+        if len(b) > 3 and d.textlength(a, font=font) <= max_w and d.textlength(b, font=font) <= max_w:
+            return [a, b]
+    return None
+
+
 def _draw_title(d: ImageDraw.ImageDraw, y: int, tag: str, title: str, highlight: str, reserve: int = 0) -> int:
     if tag:
         tag_font = _font("bold", 28)
@@ -111,7 +123,11 @@ def _draw_title(d: ImageDraw.ImageDraw, y: int, tag: str, title: str, highlight:
     size = 66
     font = _font("bold", size)
     lh = int(size * 1.4)
-    for line in _wrap(d, title, font, WIDTH - PAD * 2 - reserve):
+    max_w = WIDTH - PAD * 2 - reserve
+    lines = _wrap(d, title, font, max_w)
+    if len(lines) == 2 and len(lines[1]) <= 3:
+        lines = _balance(d, title, font, max_w) or lines
+    for line in lines:
         if highlight and highlight in line:
             # キーワードの下半分に黄色マーカーを引く
             x0 = PAD + d.textlength(line[: line.index(highlight)], font=font)
