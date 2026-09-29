@@ -1,0 +1,32 @@
+name: 参考アカウントを見る
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "X のユーザー名（@ なし）"
+        required: true
+      count:
+        description: "読む投稿の数（5〜30）"
+        required: false
+        default: "10"
+
+jobs:
+  peek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: プロフィールと最近の投稿を表示
+        run: python src/peek.py "$USERNAME" "$COUNT"
+        env:
+          USERNAME: ${{ inputs.username }}
+          COUNT: ${{ inputs.count }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
