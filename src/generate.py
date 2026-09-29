@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 import uuid
@@ -24,6 +25,7 @@ from pydantic import BaseModel, Field
 
 from common import (
     JST,
+    ROOT,
     MAX_WEIGHTED_LENGTH,
     QUEUE_PATH,
     STRATEGY_PATH,
@@ -42,6 +44,19 @@ MIN_SCORE = 7
 MAX_PER_TOPIC = 2
 MAX_CONTINUATIONS = 5
 IMAGES_DIR = QUEUE_PATH.parent / "images"
+USAGE_LOG = ROOT / "logs" / "usage.jsonl"
+
+# 料金（USD / 100 万トークン）。フォールバックで別モデルが答えた場合もその料金で数える
+PRICES = {
+    "claude-opus-5": (5.0, 25.0),
+    "claude-opus-4-8": (5.0, 25.0),
+    "claude-sonnet-5": (2.0, 10.0),
+}
+WEB_SEARCH_USD = 0.01  # 1 回あたり
+USD_TO_JPY = 150  # 目安
+
+# この実行で使った量（工程ごと）
+usage_records: list[dict] = []
 
 
 class ImageSpec(BaseModel):
@@ -188,7 +203,7 @@ BANNED_PHRASES = (
 )
 
 
-def _request(client: anthropic.Anthropic, **kwargs):
+def _request(client: anthropic.Anthropic, stage: str, **kwargs):
     # 出力上限が大きいリクエストは、SDK の仕様でストリーミングが必須
     with client.beta.messages.stream(
         model=MODEL,
@@ -198,7 +213,53 @@ def _request(client: anthropic.Anthropic, **kwargs):
         max_tokens=32000,
         **kwargs,
     ) as stream:
-        return stream.get_final_message()
+        response = stream.get_final_message()
+    _record_usage(stage, response)
+    return response
+
+
+def _record_usage(stage: str, response) -> None:
+    u = response.usage
+    searches = u.server_tool_use.web_search_requests if u.server_tool_use else 0
+    cache_write = u.cache_creation_input_tokens or 0
+    cache_read = u.cache_read_input_tokens or 0
+    price_in, price_out = PRICES.get(response.model, PRICES[MODEL])
+    usd = (
+        u.input_tokens * price_in
+        + cache_write * price_in * 1.25
+        + cache_read * price_in * 0.1
+        + u.output_tokens * price_out
+    ) / 1_000_000 + searches * WEB_SEARCH_USD
+    usage_records.append(
+        {
+            "stage": stage,
+            "model": response.model,
+            "input_tokens": u.input_tokens,
+            "cache_write_tokens": cache_write,
+            "cache_read_tokens": cache_read,
+            "output_tokens": u.output_tokens,
+            "web_searches": searches,
+            "usd": round(usd, 4),
+        }
+    )
+
+
+def write_usage_log() -> None:
+    """この実行の使用量を表示し、logs/usage.jsonl に 1 行追記する。"""
+    if not usage_records:
+        return
+    total = sum(r["usd"] for r in usage_records)
+    print("---- 使用量 ----")
+    for r in usage_records:
+        print(
+            f"{r['stage']}: 入力 {r['input_tokens'] + r['cache_write_tokens'] + r['cache_read_tokens']:,} / "
+            f"出力 {r['output_tokens']:,} トークン / 検索 {r['web_searches']} 回 / ${r['usd']:.3f}（{r['model']}）"
+        )
+    print(f"合計 ${total:.3f}（約 {total * USD_TO_JPY:.0f} 円）")
+    USAGE_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with USAGE_LOG.open("a", encoding="utf-8") as f:
+        entry = {"at": now_jst(), "usd": round(total, 4), "stages": usage_records}
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
 def research(client: anthropic.Anthropic, strategy: str, recent: list[str]) -> str:
@@ -224,7 +285,7 @@ def research(client: anthropic.Anthropic, strategy: str, recent: list[str]) -> s
         }
     ]
     for _ in range(MAX_CONTINUATIONS):
-        response = _request(client, system=RESEARCH_SYSTEM, tools=tools, messages=messages)
+        response = _request(client, "調査", system=RESEARCH_SYSTEM, tools=tools, messages=messages)
         if response.stop_reason != "pause_turn":
             break
         # サーバー側の検索ループが上限に達しただけなので、そのまま続きを依頼する
@@ -283,6 +344,7 @@ def check_facts(client: anthropic.Anthropic, memo: str, drafts: list[Draft]) -> 
 すべての下書きを照合し、番号ごとに結果を返してください。"""
     response = _request(
         client,
+        "校閲",
         system=FACTCHECK_SYSTEM,
         messages=[{"role": "user", "content": user_msg}],
         output_format=FactChecks,
@@ -301,6 +363,7 @@ def check_facts(client: anthropic.Anthropic, memo: str, drafts: list[Draft]) -> 
 def _drafts_request(client: anthropic.Anthropic, system: str, user_msg: str, label: str) -> list[Draft]:
     response = _request(
         client,
+        label,
         system=system,
         messages=[{"role": "user", "content": user_msg}],
         output_format=Drafts,
@@ -349,6 +412,9 @@ def main() -> int:
     except RuntimeError as e:
         print(str(e), file=sys.stderr)
         return 1
+    finally:
+        # 途中で失敗しても、そこまでに使った分は記録する
+        write_usage_log()
 
     candidates = []
     for i, d in enumerate(drafts):
