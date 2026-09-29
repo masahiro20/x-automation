@@ -184,9 +184,10 @@
     "sources": [
       "https://www.itmedia.co.jp/pcuser/articles/2609/25/news097.html"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-29T09:46:13+09:00",
-    "image": "queue/images/76ee234d4c29.png"
+    "image": "queue/images/76ee234d4c29.png",
+    "error": "「無償」は出典に記載なし"
   },
   {
     "id": "f6e35159757f",
@@ -196,9 +197,10 @@
     "sources": [
       "https://www.gdm.or.jp/crew/2026/0924/653591"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-29T09:46:14+09:00",
-    "image": "queue/images/f6e35159757f.png"
+    "image": "queue/images/f6e35159757f.png",
+    "error": "種類の違う製品を同じ表で比べており、結論が誤解を招く"
   },
   {
     "id": "e9edb159f868",
@@ -210,8 +212,7 @@
       "https://game.watch.impress.co.jp/docs/news/2142695.html"
     ],
     "status": "queued",
-    "created_at": "2026-09-29T09:46:14+09:00",
-    "image": "queue/images/e9edb159f868.png"
+    "created_at": "2026-09-29T09:46:14+09:00"
   },
   {
     "id": "648c99571197",
@@ -221,9 +222,10 @@
     "sources": [
       "https://www.gdm.or.jp/crew/2026/0924/653591"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-29T09:46:14+09:00",
-    "image": "queue/images/648c99571197.png"
+    "image": "queue/images/648c99571197.png",
+    "error": "PRO X の価格ネタが重複"
   },
   {
     "id": "2ff69fe251b4",
@@ -234,8 +236,9 @@
       "https://game.watch.impress.co.jp/docs/news/2142695.html",
       "https://www.gdm.or.jp/crew/2026/0924/653591"
     ],
-    "status": "queued",
-    "created_at": "2026-09-29T09:46:14+09:00"
+    "status": "skipped",
+    "created_at": "2026-09-29T09:46:14+09:00",
+    "error": "Yeti 2 のネタが重複、表示の説明が出典で確認できない"
   },
   {
     "id": "eeda30bcc417",
@@ -245,8 +248,9 @@
     "sources": [
       "https://www.itmedia.co.jp/pcuser/articles/2609/25/news097.html"
     ],
-    "status": "queued",
+    "status": "skipped",
     "created_at": "2026-09-29T09:46:14+09:00",
-    "image": "queue/images/eeda30bcc417.png"
+    "image": "queue/images/eeda30bcc417.png",
+    "error": "「無償」は出典に記載なし"
   }
 ]
