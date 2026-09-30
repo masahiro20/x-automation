@@ -7,6 +7,7 @@ X API の料金: ユーザー情報・コミュニティ検索とも 1 件あた
 from __future__ import annotations
 
 import os
+import re
 import sys
 
 import tweepy
@@ -23,6 +24,11 @@ def main() -> int:
         print(f"X の API キーが未設定です: {', '.join(missing)}", file=sys.stderr)
         return 1
     usernames = [u.strip().lstrip("@") for u in (sys.argv[1] if len(sys.argv) > 1 else "").split(",") if u.strip()]
+    # X のユーザー名として無効なもの（16 文字以上など）が 1 つでもあると全体が弾かれるので先に除く
+    invalid = [u for u in usernames if not re.fullmatch(r"[A-Za-z0-9_]{1,15}", u)]
+    for u in invalid:
+        print(f"NG @{u}（ユーザー名として無効）")
+    usernames = [u for u in usernames if u not in invalid]
     queries = [q.strip() for q in (sys.argv[2] if len(sys.argv) > 2 else "").split(",") if q.strip()]
 
     client = tweepy.Client(
