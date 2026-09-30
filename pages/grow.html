@@ -1,0 +1,284 @@
+<title>選び方ノートの育て方</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Roboto+Mono:wght@500&display=swap">
+<style>
+/* 1 カラムのスマホ向けノート。投稿の図解と同じ紺・オレンジ・黄マーカーでそろえる */
+:root {
+  --bg: #fbf8f3;
+  --card: #ffffff;
+  --ink: #1a243a;
+  --muted: #6b7180;
+  --line: #e6e0d6;
+  --accent: #ff7600;
+  --accent-ink: #ffffff;
+  --marker: #ffdd33;
+  --marker-ink: #1a243a;
+  --ok: #178a4c;
+  --ng: #c93b3b;
+  --soft: #fff1e3;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  --font-num: "Roboto Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111827; --card: #1a2333; --ink: #eef1f6; --muted: #a3abba; --line: #2c374b;
+    --accent: #ff8a2a; --accent-ink: #1a1206; --marker: #e0bf1f; --marker-ink: #141a26;
+    --ok: #4cc987; --ng: #f07373; --soft: #2a2218; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111827; --card: #1a2333; --ink: #eef1f6; --muted: #a3abba; --line: #2c374b;
+  --accent: #ff8a2a; --accent-ink: #1a1206; --marker: #e0bf1f; --marker-ink: #141a26;
+  --ok: #4cc987; --ng: #f07373; --soft: #2a2218; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.75; }
+.wrap { max-width: 640px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 64px; display: grid; gap: 28px; }
+h1 { font-size: 26px; font-weight: 900; line-height: 1.3; margin: 0; text-wrap: balance; }
+h2 { font-size: 19px; font-weight: 900; margin: 0; text-wrap: balance; }
+h3 { font-size: 15px; font-weight: 700; margin: 0; }
+p { margin: 0; }
+.mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: inherit; padding-inline: 2px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); }
+.lead { color: var(--muted); }
+header { display: grid; gap: 10px; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.stat b { display: block; font-family: var(--font-num); font-size: 22px; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; color: var(--muted); }
+section { display: grid; gap: 14px; }
+.sechead { display: grid; gap: 4px; }
+.tag { display: inline-block; justify-self: start; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 12px; }
+.task { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; }
+.task.done { opacity: .6; }
+.taskhead { display: flex; gap: 10px; align-items: flex-start; }
+.taskhead input { width: 22px; height: 22px; accent-color: var(--accent); flex: none; margin-top: 2px; }
+.taskhead label { font-weight: 700; flex: 1; min-width: 0; }
+.steps { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 4px 6px 4px 12px; font-family: var(--font-num); font-size: 14px; }
+button, .btn { font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); padding: 4px 12px; text-decoration: none; display: inline-block; }
+button.ghost, .btn.ghost { background: transparent; color: var(--accent); }
+button:focus-visible, .btn:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--marker); outline-offset: 2px; }
+.list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding-block: 10px; border-bottom: 1px solid var(--line); }
+.row .who { min-width: 0; }
+.row .name { font-weight: 700; }
+.row .meta { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.row .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.searches { display: grid; gap: 8px; }
+.search { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.search .q { font-family: var(--font-num); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.types { display: grid; gap: 10px; }
+.type { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 6px; }
+.type .ex { background: var(--soft); border-radius: 10px; padding: 8px 12px; font-size: 14px; }
+.rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.rules > div { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.rules ul { margin: 6px 0 0; padding-left: 18px; }
+.good h3 { color: var(--ok); }
+.bad h3 { color: var(--ng); }
+.topics { display: grid; gap: 10px; }
+.topic { border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 12px 12px 0; padding: 10px 14px; display: grid; gap: 4px; }
+.topic .fact { font-size: 13px; color: var(--muted); }
+.note { font-size: 12px; color: var(--muted); }
+@media (max-width: 420px) { .rules { grid-template-columns: 1fr; } .stats b { font-size: 19px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">ガジェットの選び方ノート ／ 育成メモ</p>
+    <h1>フォロワー0から、<span class="mark">最初の100人</span>を集める</h1>
+    <p class="lead">投稿は自動で出ています。まだ届く相手がいないので、最初だけ人の手で「見つけてもらう」側の作業をします。</p>
+    <div class="stats" aria-label="9月30日時点の数字">
+      <div class="stat"><b>2</b><span>フォロワー</span></div>
+      <div class="stat"><b>12</b><span>平均表示／投稿</span></div>
+      <div class="stat"><b>10</b><span>投稿済み</span></div>
+    </div>
+    <p class="note">9/30 時点。毎朝 4:40 に自動で集計しています。</p>
+  </header>
+
+  <section id="once">
+    <div class="sechead">
+      <span class="tag">最初の1回だけ・15分</span>
+      <h2>見つけてもらう準備</h2>
+      <p class="lead">終わったらチェックを付けておくと、次に開いたときにわかります（この端末にだけ保存）。</p>
+    </div>
+
+    <div class="task" data-task="username">
+      <div class="taskhead"><input type="checkbox" id="t-username"><label for="t-username">ユーザー名を覚えやすいものに変える</label></div>
+      <ol class="steps">
+        <li>X アプリ → 自分のアイコン → 設定とプライバシー</li>
+        <li>アカウント → アカウント情報 → ユーザー名</li>
+        <li>下の候補から空いているものを入れる（今は @claud_fune8or）</li>
+      </ol>
+      <div class="chips" id="names"></div>
+      <p class="note">変えても自動投稿の設定はそのまま動きます。</p>
+    </div>
+
+    <div class="task" data-task="follow">
+      <div class="taskhead"><input type="checkbox" id="t-follow"><label for="t-follow">ガジェット系のアカウントを 12 個フォローする</label></div>
+      <p class="lead">タップして開き、フォローを押すだけ。X のルール上、自動でフォローはできないので手でお願いします。フォローすると X が似たアカウントを勧めてくるので、良さそうなら追加で。</p>
+      <div class="list" id="follows"></div>
+      <p class="note">フォロワー数は 9/30 に X API で確認した値です。</p>
+    </div>
+
+    <div class="task" data-task="community">
+      <div class="taskhead"><input type="checkbox" id="t-community"><label for="t-community">コミュニティに参加する</label></div>
+      <p class="lead">参加すると、コミュニティ内のメンバーにも投稿が届くようになります。参加したら教えてください。自動投稿をコミュニティにも流せるか設定します。</p>
+      <div class="list" id="communities"></div>
+    </div>
+  </section>
+
+  <section id="daily">
+    <div class="sechead">
+      <span class="tag">毎日・10分</span>
+      <h2>人気の投稿に、<span class="mark">役に立つ一言</span>を返す</h2>
+      <p class="lead">返信は大きいアカウントの読者に見られます。「この人の話、役に立つな」と思われるとプロフィールに来てくれます。1日 3〜5 件で十分です。</p>
+    </div>
+
+    <h3>1. 返信する投稿を探す</h3>
+    <p class="note">新しい順に、ある程度いいねが付いた投稿だけが出ます。投稿から数時間以内のものに返すと見られやすいです。</p>
+    <div class="searches" id="searches"></div>
+
+    <h3>2. 3つの型で返す</h3>
+    <div class="types">
+      <div class="type"><h3>補足する</h3><p>投稿に書いていない、でも買う人が知りたい一点を足す。</p><p class="ex">「これ、ケーブル側が60W止まりだと速度が出ないので、そこだけ注意ですね」</p></div>
+      <div class="type"><h3>判定を言う</h3><p>「こういう人ならこっち」と条件つきで言い切る。アカウントのキャラそのものです。</p><p class="ex">「ノートPCも充電するなら、65W以上にしておくと後で困らないです」</p></div>
+      <div class="type"><h3>聞く</h3><p>自分も気になる点を短く質問する。会話が続くと表示が伸びます。</p><p class="ex">「このサイズで何Wまで出るんでしょう？持ち歩き用に気になってます」</p></div>
+    </div>
+
+    <h3>3. 気をつけること</h3>
+    <div class="rules">
+      <div class="good"><h3>やる</h3><ul><li>自分の言葉で書く</li><li>1〜2文で短く</li><li>返信が来たら返す</li></ul></div>
+      <div class="bad"><h3>やらない</h3><ul><li>自分の投稿やリンクの宣伝</li><li>同じ文のコピペ</li><li>1日に何十件も返す</li></ul></div>
+    </div>
+  </section>
+
+  <section id="today">
+    <div class="sechead">
+      <span class="tag">返信のネタ</span>
+      <h2>いま話題にしやすいこと</h2>
+      <p class="lead">アカウントが最近調べて確かめた事実です。返信の「補足」に使えます。</p>
+    </div>
+    <div class="topics" id="topics"></div>
+    <p class="note" id="topics-date"></p>
+  </section>
+</div>
+
+<script>
+// 毎朝のルーティンが更新するのは TOPICS と TOPICS_DATE だけ
+const TOPICS_DATE = "9/30";
+const TOPICS = [
+  { head: "プライム感謝祭は 10/13〜19", fact: "先行 10/13〜15、本番 10/16〜19。対象は去年の200万点以上から400万点以上に。プライム会員限定（Amazon 発表）" },
+  { head: "感謝祭のポイントアップはエントリー制", fact: "9/24 から受付中。期間中に合計1万円以上で対象、上限1万ポイント（期間限定ポイント）" },
+  { head: "AirPods 5 の上位は +4,000円", fact: "23,800円と27,800円。ノイキャンは両方あり。上位だけ音量スワイプ・ワイヤレス充電ケース・ノイキャンONで最大5時間（Apple 公式）" },
+  { head: "Anker Nano II 65W は USB-C が1個だけ", fact: "65W、約112g、プラグ折りたたみ、ケーブル別売り。公式ストア4,490円（9/29時点）" }
+];
+
+const NAMES = ["gadget_erabi", "erabikata_note", "kaumaeni_matte"];
+const FOLLOWS = [
+  ["瀬戸弘司", "eguri89", 411954, "ガジェット系 YouTuber"],
+  ["吉田製作所", "netatank", 258572, "PC・ガジェット系 YouTuber"],
+  ["かじがや卓哉", "kajigayatakuya", 49912, "家電芸人・iPhone 芸人"],
+  ["デイリーガジェット", "daily_gadget_jp", 21350, "ノートPC・スマホのレビュー"],
+  ["ギズモード・ジャパン", "gizmodojapan", 627343, "ガジェット系メディア"],
+  ["ITmedia NEWS", "itmedia_news", 349134, "IT ニュース"],
+  ["AppBank", "appbank", 167518, "iPhone・アプリ"],
+  ["価格.com", "kakakucom", 161764, "家電・PC の価格比較"],
+  ["PC Watch", "pc_watch", 154148, "PC ニュース"],
+  ["Impress Watch", "impress_watch", 96239, "IT・ガジェット・マネー"],
+  ["家電 Watch", "kaden_watch", 47965, "生活家電のニュース"],
+  ["iPhone Mania", "iPhoneMania_jp", 30834, "Apple の最新情報"]
+];
+const COMMUNITIES = [
+  ["PC＆ガジェット関連お買い得情報", "1681289579725479938", 4542, "セール情報の交換。感謝祭の投稿と相性がいい"],
+  ["ガジェット愛好会", "1498224086652121099", 2000, "デジタルガジェットの話題全般"],
+  ["ガジェット-電子 同好会", "2023719547522740549", 89, "小さめ。反応をもらいやすい"]
+];
+const SEARCHES = [
+  ["充電器・モバイルバッテリー", "(充電器 OR モバイルバッテリー) min_faves:30 lang:ja -filter:replies"],
+  ["イヤホン", "(イヤホン OR AirPods) min_faves:50 lang:ja -filter:replies"],
+  ["プライム感謝祭・セール", "(プライム感謝祭 OR タイムセール) (ガジェット OR 家電 OR イヤホン OR 充電器) min_faves:20 lang:ja"],
+  ["デスク環境", "(デスク環境 OR デスクツアー) min_faves:50 lang:ja -filter:replies"],
+  ["大手メディアの新着", "from:gizmodojapan OR from:kakakucom OR from:itmedia_news OR from:appbank"]
+];
+
+const fmt = n => n.toLocaleString("ja-JP");
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const link = (href, text, ghost) => { const a = el("a", ghost ? "btn ghost" : "btn", text); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; };
+
+// ユーザー名の候補（コピー）
+const names = document.getElementById("names");
+NAMES.forEach(n => {
+  const chip = el("span", "chip", "@" + n);
+  const b = el("button", "ghost", "コピー");
+  b.type = "button";
+  b.addEventListener("click", () => {
+    navigator.clipboard.writeText(n).then(() => { b.textContent = "コピー済み"; }).catch(() => {
+      const r = document.createRange(); r.selectNodeContents(chip.firstChild); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "選択しました";
+    });
+  });
+  chip.append(b); names.append(chip);
+});
+
+// フォロー候補
+const follows = document.getElementById("follows");
+FOLLOWS.forEach(([name, handle, n, why]) => {
+  const row = el("div", "row");
+  const who = el("div", "who");
+  who.append(el("div", "name", name));
+  const meta = el("div", "meta"); meta.innerHTML = "@" + handle + " ・ <span class=\"num\">" + fmt(n) + "</span> 人 ・ " + why;
+  who.append(meta);
+  row.append(who, link("https://x.com/" + handle, "開く"));
+  follows.append(row);
+});
+
+// コミュニティ
+const communities = document.getElementById("communities");
+COMMUNITIES.forEach(([name, id, n, why]) => {
+  const row = el("div", "row");
+  const who = el("div", "who");
+  who.append(el("div", "name", name));
+  const meta = el("div", "meta"); meta.innerHTML = "メンバー <span class=\"num\">" + fmt(n) + "</span> 人 ・ " + why;
+  who.append(meta);
+  row.append(who, link("https://x.com/i/communities/" + id, "開く"));
+  communities.append(row);
+});
+
+// 返信先を探す検索
+const searches = document.getElementById("searches");
+SEARCHES.forEach(([label, q]) => {
+  const box = el("div", "search");
+  const txt = el("div", "who");
+  txt.append(el("div", "name", label), el("div", "q", q));
+  box.append(txt, link("https://x.com/search?q=" + encodeURIComponent(q) + "&f=live", "探す"));
+  searches.append(box);
+});
+
+// 返信のネタ
+const topics = document.getElementById("topics");
+TOPICS.forEach(t => {
+  const d = el("div", "topic");
+  d.append(el("div", "name", t.head), el("div", "fact", t.fact));
+  topics.append(d);
+});
+document.getElementById("topics-date").textContent = TOPICS_DATE + " 更新。毎朝の投稿案づくりのときに入れ替わります。";
+
+// チェック状態はこの端末にだけ保存
+const KEY = "grow-checklist";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+document.querySelectorAll(".task").forEach(task => {
+  const box = task.querySelector("input[type=checkbox]");
+  const id = task.dataset.task;
+  box.checked = !!saved[id];
+  task.classList.toggle("done", box.checked);
+  box.addEventListener("change", () => {
+    saved[id] = box.checked;
+    task.classList.toggle("done", box.checked);
+    try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+  });
+});
+</script>

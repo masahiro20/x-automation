@@ -42,7 +42,8 @@ git pull --ff-only origin main
 ## 2. 読むもの
 - `config/strategy.md`（運用方針。キャラクター・語り口・投稿の型・禁止事項。**必ず全部読む**）
 - `queue/posts.json` の直近 40 本（同じネタ・言い回しを避けるため）
-- `logs/` にある分析結果があれば、それも（伸びた型を増やす）
+- `logs/metrics.json`（投稿ごとの表示回数・いいね・返信・保存）。表示回数や保存が多かった型・話題を増やし、
+  伸びなかった型は減らす。まだ数字が小さいうちは参考程度でよい
 
 ## 3. 調べる
 - WebSearch で、今日のネタを探す。優先順位:
@@ -81,7 +82,15 @@ git add queue/ && git commit -m "投稿案を追加（Claude Code）" && git pus
 ```
 - push が弾かれたら `git pull --rebase origin main` してからもう一度 push
 
-## 8. 終わりに
+## 8. 返信ネタのページを更新する
+オーナーが毎日の返信に使うページ（https://claude.ai/artifact/VHQxnnc91pLBGZy7yvGCzL）の
+「いま話題にしやすいこと」を、今日調べて確かめた事実に入れ替える。
+- ページの元は `pages/grow.html`。中の `TOPICS_DATE`（例: "10/1"）と `TOPICS`（3〜5 件。head は 20 字前後、
+  fact は出典で確かめた事実だけ）だけを書き換える。ほかの部分は変えない
+- Artifact ツールで、このページを `action: "read"` で読んでから、`pages/grow.html` を `url` 付きで publish する
+- `pages/grow.html` も一緒にコミットする
+
+## 9. 終わりに
 - 追加した投稿の冒頭 1 行と判定を、短く報告する
 - うまくいかなかったこと（調べられなかった、push できなかった等）があれば、それも書く
 
