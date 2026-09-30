@@ -372,7 +372,7 @@
     "sources": [
       "https://www.apple.com/jp/newsroom/2026/09/apple-introduces-airpods-5-with-best-in-class-open-ear-active-noise-cancellation/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-09-29T16:14:41+09:00",
     "author": "claude-code",
     "image": "queue/images/7a8b6de9bb6b.png",
@@ -406,7 +406,9 @@
       "recommend_col": 1,
       "conclusion": "こだわりなければ下で十分",
       "note": "価格はApple公式（税込）"
-    }
+    },
+    "posted_at": "2026-09-30T21:36:21+09:00",
+    "tweet_id": "2105275553637118107"
   },
   {
     "id": "df38599c6c3b",
