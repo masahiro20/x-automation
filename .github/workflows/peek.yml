@@ -10,6 +10,10 @@ on:
         description: "読む投稿の数（5〜30）"
         required: false
         default: "10"
+      communities:
+        description: "（任意）コミュニティの検索語をカンマ区切りで。指定するとアカウント確認モード"
+        required: false
+        default: ""
 
 jobs:
   peek:
@@ -22,10 +26,21 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: プロフィールと最近の投稿を表示
+        if: ${{ inputs.communities == '' && !contains(inputs.username, ',') }}
         run: python src/peek.py "$USERNAME" "$COUNT"
         env:
           USERNAME: ${{ inputs.username }}
           COUNT: ${{ inputs.count }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+      - name: アカウントとコミュニティを確かめる
+        if: ${{ inputs.communities != '' || contains(inputs.username, ',') }}
+        run: python src/lookup.py "$USERNAME" "$COMMUNITIES"
+        env:
+          USERNAME: ${{ inputs.username }}
+          COMMUNITIES: ${{ inputs.communities }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
