@@ -1,0 +1,39 @@
+name: 数字を集める
+
+# 投稿ごとの表示回数などとフォロワー数を logs/ に記録する。
+# 毎朝のルーティン（ROUTINE.md）がこれを見て、伸びた型を増やす。
+on:
+  schedule:
+    - cron: "40 19 * * *" # 4:40 JST（毎朝の投稿案づくりの前）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: queue
+  cancel-in-progress: false
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 数字を集める
+        run: python src/metrics.py
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+      - name: 記録を保存
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logs/
+          git diff --cached --quiet || (git commit -m "数字を記録" && git pull --rebase && git push)
