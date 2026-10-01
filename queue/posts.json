@@ -461,9 +461,11 @@
     "category": "問いかけ",
     "topic": "一般",
     "sources": [],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-09-29T16:14:42+09:00",
-    "author": "claude-code"
+    "author": "claude-code",
+    "posted_at": "2026-10-01T21:36:07+09:00",
+    "tweet_id": "2105637886741922232"
   },
   {
     "id": "0bd3b68d62eb",
