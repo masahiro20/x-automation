@@ -526,7 +526,7 @@
     "sources": [
       "https://connectinternationalone.co.jp/cionews/newproduct/%E6%96%B0%E8%A3%BD%E5%93%81-%E3%82%AF%E3%83%AB%E3%83%83%E3%81%A8%E3%81%BE%E3%81%A8%E3%81%BE%E3%82%8B%E3%80%8Ecio-mate-flat-spiral-cable-ctoc-1m%E3%80%8F%E8%B2%A9%E5%A3%B2%E9%96%8B%E5%A7%8B%EF%BC%81/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-01T04:55:28+09:00",
     "author": "claude-code",
     "image": "queue/images/e253d781cb1b.png",
@@ -543,7 +543,9 @@
       ],
       "conclusion": "充電用と割り切るなら買い",
       "note": "希望小売価格1,980円（税込）"
-    }
+    },
+    "posted_at": "2026-10-02T12:35:57+09:00",
+    "tweet_id": "2105864334622802112"
   },
   {
     "id": "68428f520993",
