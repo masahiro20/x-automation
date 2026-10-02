@@ -475,7 +475,7 @@
     "sources": [
       "https://www.bose.co.jp/pressroom/bose-sport-open-earbuds-and-bose-ultra-open-earbuds-2nd-gen"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-01T04:55:27+09:00",
     "author": "claude-code",
     "image": "queue/images/0bd3b68d62eb.png",
@@ -514,7 +514,9 @@
       "recommend_col": 1,
       "conclusion": "走る・歩く用ならSport",
       "note": "10/1発売・Bose公式発表より"
-    }
+    },
+    "posted_at": "2026-10-02T10:02:48+09:00",
+    "tweet_id": "2105825794681450790"
   },
   {
     "id": "e253d781cb1b",
