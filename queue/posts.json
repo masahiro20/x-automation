@@ -555,9 +555,11 @@
     "sources": [
       "https://game.watch.impress.co.jp/docs/news/2143708.html"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-01T04:55:28+09:00",
-    "author": "claude-code"
+    "author": "claude-code",
+    "posted_at": "2026-10-02T21:36:09+09:00",
+    "tweet_id": "2106000280370467090"
   },
   {
     "id": "f1e30978ea37",
