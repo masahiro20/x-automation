@@ -568,7 +568,7 @@
     "topic": "東プレ",
     "score": 8,
     "sources": [],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-02T15:55:38+09:00",
     "image": "queue/images/f1e30978ea37.png",
     "image_spec": {
@@ -603,7 +603,9 @@
       "caption": "",
       "conclusion": "US配列に自信ないならG515",
       "note": "価格は10/2時点"
-    }
+    },
+    "posted_at": "2026-10-03T07:36:24+09:00",
+    "tweet_id": "2106151339940086234"
   },
   {
     "id": "441a6df392e9",
