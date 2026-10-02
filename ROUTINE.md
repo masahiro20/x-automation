@@ -27,6 +27,13 @@ push が弾かれたら `git pull --rebase origin main` してからもう一度
 **このリポジトリの `main` に直接コミットして push してよい**（投稿は GitHub Actions が `main` の
 `queue/posts.json` から出すため）。X への投稿そのものはしない（投稿は `.github/workflows/post.yml` の仕事）。
 
+### 会話を短く保つ（使用量の上限対策）
+このセッションは毎日使い続けるので、会話が長くなるほど 1 回あたりの使用量が増え、月額プランの上限に当たりやすくなる。
+- 3「調べる」と 5「見直す」の Web 検索・ページ確認は、**Agent ツール（サブエージェント）にまとめて任せ**、
+  結果は「事実・数字・出典 URL」の短い一覧だけ受け取る
+- 大きなファイル（queue/posts.json など）は全部を読まず、必要な部分だけ python で取り出して表示する
+- 途中経過の説明は書かず、最後の報告だけ短く書く
+
 ## 0. 準備
 ```bash
 pip install -q -r requirements.txt
