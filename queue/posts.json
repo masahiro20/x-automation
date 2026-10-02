@@ -643,5 +643,104 @@
     "sources": [],
     "status": "queued",
     "created_at": "2026-10-02T15:55:38+09:00"
+  },
+  {
+    "id": "e59e4636d60c",
+    "text": "【名前ややこしい問題】\nFire TV Stick、いま「4K」が付くのが4つあるんですよね。\n\nSelect / 4K / 4K Plus / 4K Max\n\n感謝祭の価格だと3,980円〜8,980円。\n9/30に出た新しい「4K」は、テレビのUSBから給電できて、基本的に電源アダプターが要らないタイプ。Selectより動作も速くなってます。\n\n迷ったら新4K。Selectとの差は2,000円です",
+    "category": "比較",
+    "topic": "Fire TV",
+    "sources": [
+      "https://av.watch.impress.co.jp/docs/news/2144960.html",
+      "https://pc.watch.impress.co.jp/docs/news/2144635.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-03T04:57:22+09:00",
+    "author": "claude-code",
+    "image": "queue/images/e59e4636d60c.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "Fire TVの「4K」は4種類",
+      "highlight": "4K",
+      "verdict": "待ち",
+      "headers": [
+        "モデル",
+        "通常",
+        "感謝祭"
+      ],
+      "rows": [
+        [
+          "4K Select",
+          "10,980円",
+          "3,980円"
+        ],
+        [
+          "4K（9/30発売）",
+          "11,980円",
+          "5,980円"
+        ],
+        [
+          "4K Plus",
+          "12,980円",
+          "6,980円"
+        ],
+        [
+          "4K Max",
+          "15,980円",
+          "8,980円"
+        ]
+      ],
+      "recommend_col": -1,
+      "conclusion": "迷ったら新4K。買うなら感謝祭（10/13〜）まで待ち",
+      "note": "価格はAV Watch（10/1）より"
+    }
+  },
+  {
+    "id": "8832b10bd620",
+    "text": "【3,000円以下で地味に効く】\nテレビの裏にFire TVとか挿して、壁ぎわでギチギチになってない？\n\nエレコムのHDMI延長ケーブル（DH-HD21EX）、裏のHDMI端子を手前に引き出せるやつです。テレビ本体でWi-Fiの電波がさえぎられるのも減らせる。\n\n1mで約2,980円（市場想定価格）。8K/60Hz・4K/120Hz・eARCにも対応。\nスティックを挿す人なら、これは買い",
+    "category": "3,000円以下",
+    "topic": "エレコム",
+    "sources": [
+      "https://av.watch.impress.co.jp/docs/news/2141652.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-03T04:57:22+09:00",
+    "author": "claude-code",
+    "image": "queue/images/8832b10bd620.png",
+    "image_spec": {
+      "kind": "checklist",
+      "title": "HDMI延長ケーブルが効く人",
+      "highlight": "延長",
+      "verdict": "買い",
+      "items": [
+        "テレビ裏が壁ぎわで、スティックが挿しにくい",
+        "テレビの真裏にスティックが隠れている",
+        "ゲーム機もつなぐ（4K/120Hz対応）"
+      ],
+      "conclusion": "1mなら約2,980円。スティック派は買い",
+      "note": "エレコム DH-HD21EX・市場想定価格（AV Watchより）"
+    }
+  },
+  {
+    "id": "faf513ffe3a3",
+    "text": "Technicsの新しいヘッドホン、電池が最大90時間もつらしいです。\n\nEAH-A1000、11/19発売で実売6万円前後の見込み。\nノイキャンとLDACを使っても最大40時間。\n\nただ、発売は感謝祭のあと。\n今ヘッドホンを買い替えるか迷ってる人は、感謝祭で飛びつく前に11/19まで待って見比べるのもアリだと思う",
+    "category": "新製品",
+    "topic": "Technics",
+    "sources": [
+      "https://weekly.ascii.jp/elem/000/004/438/4438253/"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-03T04:57:22+09:00",
+    "author": "claude-code",
+    "image": "queue/images/faf513ffe3a3.png",
+    "image_spec": {
+      "kind": "number",
+      "title": "Technics EAH-A1000",
+      "highlight": "90時間",
+      "verdict": "待ち",
+      "big_text": "最大90時間",
+      "caption": "ノイキャン・LDAC使用時は最大40時間",
+      "conclusion": "11/19発売・実売6万円前後の見込み",
+      "note": "ASCII（9/30）より"
+    }
   }
 ]
