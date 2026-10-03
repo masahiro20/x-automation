@@ -645,8 +645,10 @@
     "topic": "Anker",
     "score": 7,
     "sources": [],
-    "status": "queued",
-    "created_at": "2026-10-02T15:55:38+09:00"
+    "status": "posted",
+    "created_at": "2026-10-02T15:55:38+09:00",
+    "posted_at": "2026-10-03T21:01:16+09:00",
+    "tweet_id": "2106353889213878707"
   },
   {
     "id": "e59e4636d60c",
