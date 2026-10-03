@@ -614,7 +614,7 @@
     "topic": "プライム感謝祭",
     "score": 7,
     "sources": [],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-02T15:55:38+09:00",
     "image": "queue/images/441a6df392e9.png",
     "image_spec": {
@@ -634,7 +634,9 @@
       "caption": "",
       "conclusion": "買わない日も抽選だけ見とく",
       "note": "10/1更新の公式ページ"
-    }
+    },
+    "posted_at": "2026-10-03T12:36:22+09:00",
+    "tweet_id": "2106226827790369247"
   },
   {
     "id": "375fe8c4e9a3",
