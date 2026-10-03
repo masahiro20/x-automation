@@ -748,5 +748,107 @@
       "conclusion": "11/19発売・実売6万円前後の見込み",
       "note": "ASCII（9/30）より"
     }
+  },
+  {
+    "id": "38df370f4d11",
+    "text": "Apple Watch、Series 12とSE 3で3万円ちがうんですよね。\n\nSE 3 → 41,800円から\nSeries 12 → 71,800円から\n\n差が出るのは、画面の明るさ（最大1,000ニト→2,000ニト）、電池（最大18時間→24時間）、心電図と血中酸素のアプリ。\n\n心電図アプリにこだわらないなら、迷ったらSE 3で十分だと思う（税込・Apple公式）",
+    "category": "比較",
+    "topic": "Apple",
+    "sources": [
+      "https://www.apple.com/jp/shop/buy-watch/apple-watch",
+      "https://www.apple.com/jp/shop/buy-watch/apple-watch-se",
+      "https://www.apple.com/jp/apple-watch-series-12/",
+      "https://www.apple.com/jp/apple-watch-se-3/"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-04T04:57:10+09:00",
+    "author": "claude-code",
+    "image": "queue/images/38df370f4d11.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "Apple Watch、3万円の差",
+      "highlight": "3万円",
+      "verdict": "買い",
+      "headers": [
+        "",
+        "SE 3",
+        "Series 12"
+      ],
+      "rows": [
+        [
+          "価格",
+          "41,800円〜",
+          "71,800円〜"
+        ],
+        [
+          "明るさ",
+          "最大1,000ニト",
+          "最大2,000ニト"
+        ],
+        [
+          "電池",
+          "最大18時間",
+          "最大24時間"
+        ],
+        [
+          "心電図・血中酸素",
+          "非対応",
+          "対応"
+        ]
+      ],
+      "recommend_col": 1,
+      "conclusion": "心電図がいらないならSE 3で十分",
+      "note": "税込・Apple公式サイトより"
+    }
+  },
+  {
+    "id": "3a52be27abdd",
+    "text": "【買う前にちょっと待って】\n感謝祭でKindle Paperwhiteを買おうとしてる人。\n\n10/1にKindleが全部新しくなってて、新しいPaperwhiteは39,980円、届くのは11/11からです。\n\nつまり感謝祭で安く出てるPaperwhiteが、新型なのか前のモデルなのかは要チェック。\n値段だけ見てポチると、あとで「え、旧型だった」になりがち",
+    "category": "買う前にちょっと待って",
+    "topic": "Kindle",
+    "sources": [
+      "https://www.itmedia.co.jp/news/article/2610/02/2000001949/",
+      "https://pc.watch.impress.co.jp/docs/news/2145082.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-04T04:57:10+09:00",
+    "author": "claude-code",
+    "image": "queue/images/3a52be27abdd.png",
+    "image_spec": {
+      "kind": "number",
+      "title": "新しいKindle Paperwhite",
+      "highlight": "Paperwhite",
+      "verdict": "待ち",
+      "big_text": "11/11",
+      "caption": "新型の発送開始日（予約受付中・39,980円）",
+      "conclusion": "感謝祭のPaperwhiteは新型か旧型か確認",
+      "note": "税込・ITmedia／PC Watch（10/1〜2）より"
+    }
+  },
+  {
+    "id": "a58392cc6a4c",
+    "text": "【3,000円以下で地味に効く】\n電源タップに大きいACアダプター挿したら、隣の口がふさがった人。\n\nサンワサプライの「180°回転タップ」、差し込み口が180°くるっと回るので、コードを上・横・斜めに逃がせます。\n\n2個入りで1,650円（税込）。\nただし抜け止めコンセントには使えないので、そこだけ注意",
+    "category": "3,000円以下",
+    "topic": "サンワサプライ",
+    "sources": [
+      "https://www.sanwa.co.jp/product/syohin?code=TAP-B59"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-04T04:57:10+09:00",
+    "author": "claude-code",
+    "image": "queue/images/a58392cc6a4c.png",
+    "image_spec": {
+      "kind": "checklist",
+      "title": "180°回転タップが効く場面",
+      "highlight": "180°",
+      "verdict": "買い",
+      "items": [
+        "ACアダプターで隣の口がふさがる",
+        "家具のすき間でコードが折れ曲がる",
+        "コードを上・横・斜めに逃がしたい"
+      ],
+      "conclusion": "2個入り1,650円。タップ渋滞してる人は買い",
+      "note": "サンワサプライ TAP-B59・税込・抜け止めコンセント不可"
+    }
   }
 ]
