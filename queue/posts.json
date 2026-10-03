@@ -659,7 +659,7 @@
       "https://av.watch.impress.co.jp/docs/news/2144960.html",
       "https://pc.watch.impress.co.jp/docs/news/2144635.html"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-03T04:57:22+09:00",
     "author": "claude-code",
     "image": "queue/images/e59e4636d60c.png",
@@ -698,7 +698,9 @@
       "recommend_col": -1,
       "conclusion": "迷ったら新4K。買うなら感謝祭（10/13〜）まで待ち",
       "note": "価格はAV Watch（10/1）より"
-    }
+    },
+    "posted_at": "2026-10-04T07:35:54+09:00",
+    "tweet_id": "2106513599527108667"
   },
   {
     "id": "8832b10bd620",
