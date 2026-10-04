@@ -710,7 +710,7 @@
     "sources": [
       "https://av.watch.impress.co.jp/docs/news/2141652.html"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-03T04:57:22+09:00",
     "author": "claude-code",
     "image": "queue/images/8832b10bd620.png",
@@ -726,7 +726,9 @@
       ],
       "conclusion": "1mなら約2,980円。スティック派は買い",
       "note": "エレコム DH-HD21EX・市場想定価格（AV Watchより）"
-    }
+    },
+    "posted_at": "2026-10-04T12:35:50+09:00",
+    "tweet_id": "2106589081178194072"
   },
   {
     "id": "faf513ffe3a3",
