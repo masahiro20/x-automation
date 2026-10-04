@@ -738,7 +738,7 @@
     "sources": [
       "https://weekly.ascii.jp/elem/000/004/438/4438253/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-03T04:57:22+09:00",
     "author": "claude-code",
     "image": "queue/images/faf513ffe3a3.png",
@@ -751,7 +751,9 @@
       "caption": "ノイキャン・LDAC使用時は最大40時間",
       "conclusion": "11/19発売・実売6万円前後の見込み",
       "note": "ASCII（9/30）より"
-    }
+    },
+    "posted_at": "2026-10-04T21:35:49+09:00",
+    "tweet_id": "2106724973343834320"
   },
   {
     "id": "38df370f4d11",
