@@ -854,5 +854,63 @@
       "conclusion": "2個入り1,650円。タップ渋滞してる人は買い",
       "note": "サンワサプライ TAP-B59・税込・抜け止めコンセント不可"
     }
+  },
+  {
+    "id": "9fd379360c04",
+    "text": "ワイヤレスイヤホンの売れ筋トップ10、1万円台前半は2つだけでした。\n\nAnker Soundcore Liberty 5 → 12,328円\nソニー WF-C710N → 11,800円\n（価格.com最安・9/27〜10/3集計）\n\nどっちもノイキャン付きで、ONのときの電池は8時間と8.5時間。ほぼ同じです。\n差が出るのはLiberty 5のLDAC対応。\n\nLDACはiPhoneだと使えないので、iPhoneの人は安いほうでいいと思う。\nAndroidで音にこだわるならLiberty 5",
+    "category": "買い時",
+    "topic": "イヤホン",
+    "sources": [
+      "https://kakaku.com/kaden/headphones/ranking_2046/",
+      "https://www.ankerjapan.com/products/a3957",
+      "https://www.sony.jp/headphone/products/WF-C710N/spec.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-04T12:51:17+09:00",
+    "author": "claude-code",
+    "image": "queue/images/9fd379360c04.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "1万円台前半のノイキャン、この2択",
+      "highlight": "この2択",
+      "verdict": "買い",
+      "headers": [
+        "",
+        "Liberty 5",
+        "WF-C710N"
+      ],
+      "rows": [
+        [
+          "最安価格",
+          "12,328円",
+          "11,800円"
+        ],
+        [
+          "電池（NC ON・本体）",
+          "最大8時間",
+          "最大8.5時間"
+        ],
+        [
+          "LDAC",
+          "◎",
+          "×"
+        ]
+      ],
+      "recommend_col": -1,
+      "conclusion": "iPhoneなら安いほう、AndroidならLiberty 5",
+      "note": "価格.com最安（9/27〜10/3集計）・各社公式仕様"
+    }
+  },
+  {
+    "id": "1ecfd96aba98",
+    "text": "マウスの売れ筋トップ10、7つがロジクールでした。\n\nしかも1位は3,981円のSignature Plus M750。\n2万円近いMX Master 4（3位）より上なんですよね（価格.com最安・9/27〜10/3集計）\n\n毎日さわるものなのに、みんな意外と「ふつうのやつ」を選んでる。\n\n今使ってるマウス、何ですか？\n買い替えたい人は、何が不満かも教えてほしいです",
+    "category": "問いかけ",
+    "topic": "ロジクール",
+    "sources": [
+      "https://kakaku.com/pc/mouse/ranking_0160/"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-04T12:51:17+09:00",
+    "author": "claude-code"
   }
 ]
