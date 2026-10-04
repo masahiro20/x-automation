@@ -914,5 +914,28 @@
     "status": "queued",
     "created_at": "2026-10-04T12:51:17+09:00",
     "author": "claude-code"
+  },
+  {
+    "id": "244e2ae8f065",
+    "text": "ノートPCとスマホ、充電器1個で済ませたい人。\n\nCIOのNovaPort SLIM DUO II 65W、USB-Cが2つで約90g。厚さ約12.5mmの薄型です。\n\nただ2台同時につなぐと、65Wを分け合う形に。\n→ 45W＋20W\n→ 30W＋30W\n\nPCに45W回せれば足りるなら、これで1個にまとめてOK（発売時5,980円・税込）",
+    "category": "買い時",
+    "topic": "CIO",
+    "sources": [
+      "https://gori.me/iphone-accessories/charging-hub/167636"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-05T04:55:55+09:00",
+    "author": "claude-code",
+    "image": "queue/images/244e2ae8f065.png",
+    "image_spec": {
+      "kind": "number",
+      "title": "CIOの薄型65W、2台同時だと",
+      "highlight": "2台同時",
+      "verdict": "買い",
+      "big_text": "45W＋20W",
+      "caption": "2台同時につないだとき（30W＋30Wの組み合わせも）",
+      "conclusion": "PCに45Wで足りるなら、充電器はこれ1個でOK",
+      "note": "約90g・発売時5,980円（税込）・gori.meより"
+    }
   }
 ]
