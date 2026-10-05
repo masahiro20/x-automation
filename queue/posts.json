@@ -943,5 +943,157 @@
       "conclusion": "PCに45Wで足りるなら、充電器はこれ1個でOK",
       "note": "約90g・発売時5,980円（税込）・gori.meより"
     }
+  },
+  {
+    "id": "d218413fc33c",
+    "text": "ソニーのWH-1000XM6とXM5、いま差が3,300円しかないんですよね。\n\nXM6 → 59,400円\nXM5 → 56,100円\n（ソニーストア・10/6時点）\n\nXM6はノイキャン用のマイクが8個→12個、プロセッサーも新しいQN3に。\n電池はどっちも最大30時間（ノイキャンON）で同じ。\n\nこの差なら、今から買うのは新しいXM6で迷わなくていいと思う",
+    "category": "比較",
+    "topic": "Sony",
+    "sources": [
+      "https://www.sony.jp/headphone/products/WH-1000XM6/",
+      "https://www.sony.jp/headphone/products/WH-1000XM5/",
+      "https://pc.watch.impress.co.jp/docs/news/2014693.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-06T04:58:19+09:00",
+    "author": "claude-code",
+    "image": "queue/images/d218413fc33c.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "ソニー XM6とXM5、差は3,300円",
+      "highlight": "3,300円",
+      "verdict": "買い",
+      "headers": [
+        "",
+        "XM6",
+        "XM5"
+      ],
+      "rows": [
+        [
+          "価格",
+          "59,400円",
+          "56,100円"
+        ],
+        [
+          "ノイキャン用マイク",
+          "12個",
+          "8個"
+        ],
+        [
+          "プロセッサー",
+          "QN3",
+          "QN1＋V1"
+        ],
+        [
+          "電池（NC ON）",
+          "最大30時間",
+          "最大30時間"
+        ]
+      ],
+      "recommend_col": 1,
+      "conclusion": "この差なら新しいXM6で迷わなくていい",
+      "note": "ソニーストア価格（10/6時点）・sony.jpより"
+    }
+  },
+  {
+    "id": "38311be454fe",
+    "text": "AirPods Pro 3とAirPods 5、差は19,000円。\n\nPro 3 → 42,800円\nAirPods 5 → 23,800円\n\nどっちもノイキャンあり、IP57。\n差が出るのは電池（ノイキャンONで最大8時間と最大4時間）と、Pro 3だけの心拍センサー・ヒアリング補助。\n\n耳に押し込むタイプが苦手ならAirPods 5、長く着けっぱなしの人はPro 3（Apple公式）",
+    "category": "比較",
+    "topic": "Apple",
+    "sources": [
+      "https://www.apple.com/jp/shop/buy-airpods/airpods-pro-3",
+      "https://www.apple.com/jp/shop/buy-airpods/airpods-5",
+      "https://www.apple.com/jp/airpods/"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-06T04:58:19+09:00",
+    "author": "claude-code",
+    "image": "queue/images/38311be454fe.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "AirPods Pro 3と5、19,000円の差",
+      "highlight": "19,000円",
+      "verdict": "買い",
+      "headers": [
+        "",
+        "Pro 3",
+        "AirPods 5"
+      ],
+      "rows": [
+        [
+          "価格",
+          "42,800円",
+          "23,800円"
+        ],
+        [
+          "電池（NC ON）",
+          "最大8時間",
+          "最大4時間"
+        ],
+        [
+          "心拍センサー",
+          "あり",
+          "なし"
+        ],
+        [
+          "防塵・防水",
+          "IP57",
+          "IP57"
+        ]
+      ],
+      "recommend_col": -1,
+      "conclusion": "着けっぱなしならPro 3、押し込むのが苦手なら5",
+      "note": "Apple公式サイトより（AirPods 5はワイヤレス充電ケースなし）"
+    }
+  },
+  {
+    "id": "b8297522fcf7",
+    "text": "Google Pixel 11、無印とProで38,000円ちがいます。\n\nPixel 11 → 136,800円から\n11 Pro → 174,800円から\n\n画面はどっちも6.3インチ、チップも同じTensor G6。\n差はほぼカメラで、5倍望遠が1,000万画素→4,800万画素に。\n\n遠くを撮らないなら、無印で十分だと思う（税込・Google ストア）",
+    "category": "比較",
+    "topic": "Google",
+    "sources": [
+      "https://weekly.ascii.jp/elem/000/004/426/4426520/",
+      "https://k-tai.watch.impress.co.jp/docs/news/2132498.html"
+    ],
+    "status": "queued",
+    "created_at": "2026-10-06T04:58:20+09:00",
+    "author": "claude-code",
+    "image": "queue/images/b8297522fcf7.png",
+    "image_spec": {
+      "kind": "table",
+      "title": "Pixel 11、無印とProの差",
+      "highlight": "Pro",
+      "verdict": "買い",
+      "headers": [
+        "",
+        "Pixel 11",
+        "11 Pro"
+      ],
+      "rows": [
+        [
+          "価格",
+          "136,800円〜",
+          "174,800円〜"
+        ],
+        [
+          "画面",
+          "6.3インチ",
+          "6.3インチ"
+        ],
+        [
+          "チップ",
+          "Tensor G6",
+          "Tensor G6"
+        ],
+        [
+          "5倍望遠",
+          "1,000万画素",
+          "4,800万画素"
+        ]
+      ],
+      "recommend_col": 1,
+      "conclusion": "遠くを撮らないなら無印で十分",
+      "note": "税込・Googleストア価格（ASCIIより）"
+    }
   }
 ]
