@@ -873,7 +873,7 @@
       "https://www.ankerjapan.com/products/a3957",
       "https://www.sony.jp/headphone/products/WF-C710N/spec.html"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-04T12:51:17+09:00",
     "author": "claude-code",
     "image": "queue/images/9fd379360c04.png",
@@ -907,7 +907,9 @@
       "recommend_col": -1,
       "conclusion": "iPhoneなら安いほう、AndroidならLiberty 5",
       "note": "価格.com最安（9/27〜10/3集計）・各社公式仕様"
-    }
+    },
+    "posted_at": "2026-10-06T07:36:05+09:00",
+    "tweet_id": "2107238423492747389"
   },
   {
     "id": "1ecfd96aba98",
