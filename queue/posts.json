@@ -1111,9 +1111,10 @@
     "category": "つぶやき",
     "topic": "一般",
     "sources": [],
-    "status": "draft",
+    "status": "queued",
     "created_at": "2026-10-06T22:30:07+09:00",
-    "author": "claude-code"
+    "author": "claude-code",
+    "approved_at": "2026-10-07T01:22:24+09:00"
   },
   {
     "id": "77cfa4f72cf3",
@@ -1123,7 +1124,7 @@
     "sources": [
       "https://madori-presentation.vercel.app"
     ],
-    "status": "draft",
+    "status": "queued",
     "created_at": "2026-10-06T22:30:07+09:00",
     "author": "claude-code",
     "image": "queue/images/77cfa4f72cf3.png",
@@ -1140,6 +1141,7 @@
       ],
       "conclusion": "サーバー不要。ブラウザだけで動く",
       "note": "マドリ3D"
-    }
+    },
+    "approved_at": "2026-10-07T01:22:24+09:00"
   }
 ]
