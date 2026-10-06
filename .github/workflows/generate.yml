@@ -1,10 +1,8 @@
 name: 投稿案を生成（予備）
 
 # ふだんは Claude Code のルーティン（ROUTINE.md）が投稿案を作る。
-# これはルーティンが失敗して投稿待ちが 2 本未満になったときだけ API で補充する予備。
+# オーナーが毎回 GO する運用にしたので、定期実行はやめて手動実行だけにした（作るのは下書き）。
 on:
-  schedule:
-    - cron: "0 1 * * *" # 10:00 JST
   workflow_dispatch:
 
 permissions:
