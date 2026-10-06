@@ -960,7 +960,7 @@
       "https://www.sony.jp/headphone/products/WH-1000XM5/",
       "https://pc.watch.impress.co.jp/docs/news/2014693.html"
     ],
-    "status": "queued",
+    "status": "retired",
     "created_at": "2026-10-06T04:58:19+09:00",
     "author": "claude-code",
     "image": "queue/images/d218413fc33c.png",
@@ -999,7 +999,8 @@
       "recommend_col": 1,
       "conclusion": "この差なら新しいXM6で迷わなくていい",
       "note": "ソニーストア価格（10/6時点）・sony.jpより"
-    }
+    },
+    "note": "ガジェット運用の終了（10/6）で取り下げ"
   },
   {
     "id": "38311be454fe",
@@ -1011,7 +1012,7 @@
       "https://www.apple.com/jp/shop/buy-airpods/airpods-5",
       "https://www.apple.com/jp/airpods/"
     ],
-    "status": "queued",
+    "status": "retired",
     "created_at": "2026-10-06T04:58:19+09:00",
     "author": "claude-code",
     "image": "queue/images/38311be454fe.png",
@@ -1050,7 +1051,8 @@
       "recommend_col": -1,
       "conclusion": "着けっぱなしならPro 3、押し込むのが苦手なら5",
       "note": "Apple公式サイトより（AirPods 5はワイヤレス充電ケースなし）"
-    }
+    },
+    "note": "ガジェット運用の終了（10/6）で取り下げ"
   },
   {
     "id": "b8297522fcf7",
@@ -1061,7 +1063,7 @@
       "https://weekly.ascii.jp/elem/000/004/426/4426520/",
       "https://k-tai.watch.impress.co.jp/docs/news/2132498.html"
     ],
-    "status": "queued",
+    "status": "retired",
     "created_at": "2026-10-06T04:58:20+09:00",
     "author": "claude-code",
     "image": "queue/images/b8297522fcf7.png",
@@ -1100,6 +1102,44 @@
       "recommend_col": 1,
       "conclusion": "遠くを撮らないなら無印で十分",
       "note": "税込・Googleストア価格（ASCIIより）"
+    },
+    "note": "ガジェット運用の終了（10/6）で取り下げ"
+  },
+  {
+    "id": "0aa6b40368cf",
+    "text": "このアカウント、今日から作り直します。\n\n26歳。AIにどハマりして、\n気づいたら毎日なにか作ってる。\n\n図面から家を3Dにするツール\nAIが記事を書いて採点するメディア\n福祉の書類をつくるサービス\n\nジャンルはバラバラ。でもこれが今のリアル。\n作ったものは、ここに全部記録していきます",
+    "category": "つぶやき",
+    "topic": "一般",
+    "sources": [],
+    "status": "draft",
+    "created_at": "2026-10-06T22:30:07+09:00",
+    "author": "claude-code"
+  },
+  {
+    "id": "77cfa4f72cf3",
+    "text": "平面図のPDFを1枚入れたら、家が3Dで建った。\n\n注文住宅の提案用に作ったツールです。\n図面から壁・窓・ドア・部屋を読み取って\n→ 外観と内観のパース\n→ 立面図と日照シミュレーション\n→ 家の中を歩くウォークスルー動画\nまで一気に作ります。\n\nサーバー不要で、ブラウザだけで動く。\nhttps://madori-presentation.vercel.app",
+    "category": "作品紹介",
+    "topic": "マドリ3D",
+    "sources": [
+      "https://madori-presentation.vercel.app"
+    ],
+    "status": "draft",
+    "created_at": "2026-10-06T22:30:07+09:00",
+    "author": "claude-code",
+    "image": "queue/images/77cfa4f72cf3.png",
+    "image_spec": {
+      "kind": "checklist",
+      "title": "平面図PDF 1枚から作れるもの",
+      "highlight": "1枚",
+      "items": [
+        "壁・窓・ドア・部屋を自動で読み取って3Dに",
+        "外観・内観パース（テイストを選べる）",
+        "東西南北の立面図と清書した平面図",
+        "日照シミュレーションと日影図",
+        "ウォークスルー動画とプレゼン資料"
+      ],
+      "conclusion": "サーバー不要。ブラウザだけで動く",
+      "note": "マドリ3D"
     }
   }
 ]

@@ -1,11 +1,13 @@
-"""Claude Code（毎朝のルーティン）が書いた投稿案をチェックして、投稿待ちに追加する。
+"""Claude Code（毎朝のルーティン）が書いた投稿案をチェックして、下書き（status "draft"）として追加する。
+
+下書きは投稿されない。オーナーが GO したものだけを src/approve.py で投稿待ち（"queued"）にする。
 
 使い方:
-    python src/add_posts.py drafts.json             チェック → 画像を描く → queue/posts.json に追加
+    python src/add_posts.py drafts.json             チェック → 画像を描く → queue/posts.json に下書きとして追加
     python src/add_posts.py drafts.json --preview D  チェックして画像を D に描くだけ（キューは変えない）
 
 drafts.json の形:
-    {"posts": [{"text": "...", "category": "比較", "topic": "Anker",
+    {"posts": [{"text": "...", "category": "作品紹介", "topic": "マドリ3D",
                 "sources": ["https://..."], "image": {...} または null}]}
 image の中身は src/render.py の render() に渡す spec（kind は table / checklist / number）。
 """
@@ -32,6 +34,10 @@ from render import render
 IMAGES_DIR = QUEUE_PATH.parent / "images"
 MAX_PER_TOPIC = 2
 IMAGE_KINDS = ("table", "checklist", "number")
+# 出典がなくてよい型（本人の考え・問いかけ）
+NO_SOURCE_CATEGORIES = ("問いかけ", "つぶやき")
+# まだ投稿されていない状態（同じ話題の本数を数えるときに使う）
+PENDING = ("draft", "queued")
 
 
 def problems_of(post: dict) -> list[str]:
@@ -44,7 +50,7 @@ def problems_of(post: dict) -> list[str]:
     banned = [w for w in BANNED_PHRASES if w in text]
     if banned:
         found.append(f"AI っぽい言い回し: {'、'.join(banned)}")
-    if post.get("category") != "問いかけ" and not post.get("sources"):
+    if post.get("category") not in NO_SOURCE_CATEGORIES and not post.get("sources"):
         found.append("出典（sources）がない")
     image = post.get("image")
     if image and image.get("kind") not in IMAGE_KINDS:
@@ -72,7 +78,7 @@ def main() -> int:
     preview_dir = Path(args[args.index("--preview") + 1]) if "--preview" in args else None
 
     queue = load_queue()
-    queued = [p for p in queue if p["status"] == "queued"]
+    queued = [p for p in queue if p["status"] in PENDING]
     per_topic: dict[str, int] = {}
     for p in queued:
         key = p.get("topic", "").lower()
@@ -83,7 +89,7 @@ def main() -> int:
         found = problems_of(post)
         key = post.get("topic", "一般").strip().lower()
         if key != "一般" and per_topic.get(key, 0) >= MAX_PER_TOPIC:
-            found.append(f"「{post.get('topic')}」の投稿待ちがすでに {MAX_PER_TOPIC} 本ある")
+            found.append(f"「{post.get('topic')}」の未投稿がすでに {MAX_PER_TOPIC} 本ある")
         if found:
             print(f"NG {i}: {post.get('text', '')[:30]}… → {' / '.join(found)}")
             continue
@@ -107,7 +113,7 @@ def main() -> int:
             "category": post.get("category", ""),
             "topic": post.get("topic", "一般"),
             "sources": post.get("sources", []),
-            "status": "queued",
+            "status": "draft",
             "created_at": now_jst(),
             "author": "claude-code",
         }
@@ -118,7 +124,9 @@ def main() -> int:
             print(f"画像: {entry['image']}")
         queue.append(entry)
     save_queue(queue)
-    print(f"{len(accepted)} 本を投稿待ちに追加しました（投稿待ち 合計 {len(queued) + len(accepted)} 本）。")
+    print(f"{len(accepted)} 本を下書きに追加しました（未投稿 合計 {len(queued) + len(accepted)} 本）。")
+    for entry in queue[-len(accepted):] if accepted else []:
+        print(f"  {entry['id']}: {entry['text'].splitlines()[0][:40]}")
     return 0 if len(accepted) == len(drafts) else 2
 
 

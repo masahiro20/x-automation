@@ -452,7 +452,7 @@ def main() -> int:
             "topic": d.topic,
             "score": d.score,
             "sources": d.sources,
-            "status": "queued",
+            "status": "draft",  # オーナーが GO するまで投稿しない
             "created_at": now_jst(),
         }
         if d.image.kind != "none":

@@ -8,6 +8,7 @@ X のタイムラインで目に止まり、保存されやすい「手作りの
 
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 
@@ -17,7 +18,9 @@ WIDTH = 1200
 PAD = 64
 MIN_HEIGHT = 675
 MAX_HEIGHT = 1500
-BRAND = "ガジェットの選び方ノート"
+# 右下のアカウント名。プロフィール（config/profile.json）の名前に合わせる
+PROFILE_PATH = Path(__file__).resolve().parent.parent / "config" / "profile.json"
+BRAND = json.loads(PROFILE_PATH.read_text(encoding="utf-8"))["name"]
 
 BG = (255, 250, 243)
 CARD = (255, 255, 255)

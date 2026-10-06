@@ -1,17 +1,20 @@
 # x-automation
 
-X（旧Twitter）アカウントの投稿を自動化し、収益化を目指すプロジェクトです。
+X アカウント「まさ｜AIのとりこ」の運用を自動化するプロジェクトです。
+26歳がAIと一緒に作ったものを記録していくアカウントで、**投稿はオーナーが毎回 GO したものだけ**が出ます。
+（2026/10/6 まではガジェット情報の完全自動アカウント「ガジェットの選び方ノート」として運用していました）
 
 ## 仕組み
 
 ```
-毎朝 5:00ごろ   Claude Code のルーティンが ROUTINE.md の手順で投稿案を作る（月額プランの範囲内）
-                 → ネタを調べ、出典で確かめ、書いて、図解を目で確認 → queue/ に追加して push
-7:30 / 12:15 / 21:00 の時間帯   GitHub Actions が投稿案を 1 本ずつ X に投稿（画像付きなら画像も）
-10:00（予備）    投稿待ちが 2 本未満のときだけ、API（src/generate.py）で補充
+毎朝 4:52       Claude Code のルーティンが ROUTINE.md の手順で下書きを 2 本作る（月額プランの範囲内）
+                 → config/works.md（作品のネタ帳）の事実だけで書き、図解を目で確認 → 下書きとして push
+                 → オーナーのスマホに通知。オーナーはルーティンの会話で「GO」か直しを返すだけ
+7:30 / 12:15 / 21:00 の時間帯   GitHub Actions が GO 済みの投稿を 1 本ずつ X に投稿（画像付きなら画像も）
 ```
 
-- 投稿案は `queue/posts.json` で確認できます。各投稿の出典 URL（`sources`）も記録されています
+- 下書き・投稿は `queue/posts.json` で確認できます（`draft` = GO 待ち、`queued` = GO 済み、`posted` = 投稿済み）
+- 手で GO するときは `python src/approve.py go <id>`（一覧は `python src/approve.py list`）
 - 投稿を止めたいときは、Variables に `POSTING_ENABLED` = `false` を登録します（削除すると再開）
 
 ## 最初にやること（オーナー作業）
@@ -51,7 +54,9 @@ GitHub のこのリポジトリ → Settings → Secrets and variables → Actio
 ```
 config/strategy.md          運用方針（ジャンル・口調・投稿の型・収益導線）
 queue/posts.json            投稿案と投稿履歴
-src/generate.py             投稿案の生成
+src/generate.py             投稿案の生成（手動実行だけの予備。作るのは下書き）
+src/approve.py              下書きの GO・取り下げ・直し
+config/works.md             作品のネタ帳（投稿に使ってよい事実）
 src/post.py                 X への投稿
 .github/workflows/          自動実行のスケジュール
 ```
