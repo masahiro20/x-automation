@@ -1111,10 +1111,12 @@
     "category": "つぶやき",
     "topic": "一般",
     "sources": [],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-06T22:30:07+09:00",
     "author": "claude-code",
-    "approved_at": "2026-10-07T01:22:24+09:00"
+    "approved_at": "2026-10-07T01:22:24+09:00",
+    "posted_at": "2026-10-07T07:35:50+09:00",
+    "tweet_id": "2107600748045312073"
   },
   {
     "id": "77cfa4f72cf3",
