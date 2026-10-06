@@ -10,11 +10,13 @@ drafts.json の形:
     {"posts": [{"text": "...", "category": "作品紹介", "topic": "マドリ3D",
                 "sources": ["https://..."], "image": {...} または null}]}
 image の中身は src/render.py の render() に渡す spec（kind は table / checklist / number）。
+動画を付けるときは "video": "path/to/demo.mp4"（mp4・H.264・2分20秒以内・50MB 以内）。動画があれば画像より優先される。
 """
 
 from __future__ import annotations
 
 import json
+import shutil
 import sys
 import uuid
 from pathlib import Path
@@ -32,6 +34,8 @@ from common import (
 from render import render
 
 IMAGES_DIR = QUEUE_PATH.parent / "images"
+VIDEOS_DIR = QUEUE_PATH.parent / "videos"
+MAX_VIDEO_BYTES = 50 * 1024 * 1024
 MAX_PER_TOPIC = 2
 IMAGE_KINDS = ("table", "checklist", "number")
 # 出典がなくてよい型（本人の考え・問いかけ）
@@ -52,6 +56,13 @@ def problems_of(post: dict) -> list[str]:
         found.append(f"AI っぽい言い回し: {'、'.join(banned)}")
     if post.get("category") not in NO_SOURCE_CATEGORIES and not post.get("sources"):
         found.append("出典（sources）がない")
+    video = post.get("video")
+    if video:
+        path = Path(video)
+        if path.suffix.lower() != ".mp4" or not path.exists():
+            found.append(f"動画が見つからないか mp4 ではない: {video}")
+        elif path.stat().st_size > MAX_VIDEO_BYTES:
+            found.append(f"動画が大きすぎる（{path.stat().st_size // 1024 // 1024}MB）")
     image = post.get("image")
     if image and image.get("kind") not in IMAGE_KINDS:
         found.append(f"画像の種類が不明: {image.get('kind')}")
@@ -117,6 +128,12 @@ def main() -> int:
             "created_at": now_jst(),
             "author": "claude-code",
         }
+        if post.get("video"):
+            VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
+            dest = VIDEOS_DIR / f"{post_id}.mp4"
+            shutil.copyfile(post["video"], dest)
+            entry["video"] = str(dest.relative_to(ROOT))
+            print(f"動画: {entry['video']}")
         if post.get("image"):
             path = render(post["image"], IMAGES_DIR / f"{post_id}.png", tag=entry["category"])
             entry["image"] = str(path.relative_to(ROOT))
