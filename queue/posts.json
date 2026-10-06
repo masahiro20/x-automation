@@ -919,9 +919,11 @@
     "sources": [
       "https://kakaku.com/pc/mouse/ranking_0160/"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-04T12:51:17+09:00",
-    "author": "claude-code"
+    "author": "claude-code",
+    "posted_at": "2026-10-06T12:35:57+09:00",
+    "tweet_id": "2107313886894416306"
   },
   {
     "id": "244e2ae8f065",
