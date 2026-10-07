@@ -1126,7 +1126,7 @@
     "sources": [
       "https://madori-presentation.vercel.app"
     ],
-    "status": "queued",
+    "status": "posted",
     "created_at": "2026-10-06T22:30:07+09:00",
     "author": "claude-code",
     "image": "queue/images/77cfa4f72cf3.png",
@@ -1144,7 +1144,9 @@
       "conclusion": "サーバー不要。ブラウザだけで動く",
       "note": "マドリ3D"
     },
-    "approved_at": "2026-10-07T01:22:24+09:00"
+    "approved_at": "2026-10-07T01:22:24+09:00",
+    "posted_at": "2026-10-07T12:36:17+09:00",
+    "tweet_id": "2107676358750937553"
   },
   {
     "id": "719228c6b5ec",
