@@ -10,6 +10,7 @@
 ## マドリ3D（公開中）
 - URL: https://madori-presentation.vercel.app
 - リポジトリ: https://github.com/masahiro20/presentation-
+- デモ動画: `assets/demos/madori3d.mp4`（31秒・BGM付き。外観360° → 平面図 → 3D → LDKのウォークスルー → 住所を入れると周りの街が立ち上がる → 夏至の日照（となりの家の影も）。撮影地は春日井市高森台の町名レベルで、特定のお宅ではない）
 - ジャンル: 住宅
 - ひとことで: 平面図のPDFを1枚入れるだけで、家が立体になる。注文住宅の提案用
 - できること

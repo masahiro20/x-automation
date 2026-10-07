@@ -55,7 +55,9 @@ git pull --ff-only origin main
   - `sources` は作品の URL かリポジトリの URL（つぶやき・問いかけは不要）
 - 2 本は、**違う作品・違う型**にする。昨日と同じ作品は避ける
 - works.md の「エピソード」が空の作品は、体験や気持ちを作らず、事実（できること・仕組み・数字）で書く
-- 作品紹介には、なるべく画像を付ける（spec の項目: `kind`（table / checklist / number）, `title`, `highlight`,
+- **作品の works.md に「デモ動画」があれば、作品紹介ではそれを `"video": "assets/demos/〇〇.mp4"` で付ける**
+  （動画は文章より伝わるので最優先。同じ動画は 1 週間に 1 回まで）
+- 動画が無い作品紹介には、なるべく画像を付ける（spec の項目: `kind`（table / checklist / number）, `title`, `highlight`,
   `headers`, `rows`, `items`, `big_text`, `caption`, `conclusion`, `note`。`verdict` は使わない）
 - 書いたら声に出して読んで、宣伝文や AI の文章に聞こえないかを確かめる
 

@@ -43,3 +43,19 @@ def test_already_posted_in_slot_is_not_due():
 
 def test_post_from_previous_slot_does_not_block():
     assert due_slot(at(12, 30), [posted(7, 40)]) == at(12, 15)
+
+
+def test_video_is_split_into_ordered_chunks():
+    from post import chunks
+
+    data = bytes(range(256)) * 41  # 10,496 バイト
+    parts = chunks(data, size=4096)
+    assert [len(p) for p in parts] == [4096, 4096, 2304]
+    assert b"".join(parts) == data
+
+
+def test_missing_video_is_reported():
+    from add_posts import problems_of
+
+    found = problems_of({"text": "動画つき", "category": "作品紹介", "sources": ["https://x"], "video": "nope.mp4"})
+    assert any("動画" in f for f in found)

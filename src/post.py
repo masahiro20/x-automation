@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 import sys
+import time as clock
 from datetime import datetime, time, timedelta
 
 import tweepy
@@ -23,6 +24,9 @@ from common import JST, ROOT, load_queue, now_jst, save_queue
 
 X_ENV_KEYS = ("X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_TOKEN_SECRET")
 MEDIA_UPLOAD_URL = "https://api.x.com/2/media/upload"
+# 動画は分割アップロード（1 回 5MB まで）。initialize → append → finalize → 処理が終わるまで status を確認
+VIDEO_CHUNK_BYTES = 4 * 1024 * 1024
+VIDEO_WAIT_LIMIT_SECONDS = 300
 
 # 投稿枠（日本時間）。各枠は次の枠が始まるまで有効（最後の枠は日付が変わるまで）。
 # 定期実行が遅れても、次の枠までに 1 回でも動けば取りこぼさない
@@ -40,14 +44,59 @@ def due_slot(now: datetime, queue: list[dict]) -> datetime | None:
     return None
 
 
-def upload_image(path: str) -> str:
-    """画像を X にアップロードし、media id を返す（tweepy は v2 のアップロードに未対応）。"""
-    session = OAuth1Session(
+def x_session() -> OAuth1Session:
+    return OAuth1Session(
         os.environ["X_API_KEY"],
         client_secret=os.environ["X_API_SECRET"],
         resource_owner_key=os.environ["X_ACCESS_TOKEN"],
         resource_owner_secret=os.environ["X_ACCESS_TOKEN_SECRET"],
     )
+
+
+def chunks(data: bytes, size: int = VIDEO_CHUNK_BYTES) -> list[bytes]:
+    return [data[i : i + size] for i in range(0, len(data), size)] or [b""]
+
+
+def upload_video(path: str) -> str:
+    """mp4 を分割アップロードし、X 側の処理が終わったら media id を返す。"""
+    session = x_session()
+    data = (ROOT / path).read_bytes()
+    init = session.post(
+        f"{MEDIA_UPLOAD_URL}/initialize",
+        json={"media_type": "video/mp4", "total_bytes": len(data), "media_category": "tweet_video"},
+        timeout=60,
+    )
+    init.raise_for_status()
+    media_id = init.json()["data"]["id"]
+    for index, chunk in enumerate(chunks(data)):
+        r = session.post(
+            f"{MEDIA_UPLOAD_URL}/{media_id}/append",
+            files={"media": ("chunk", chunk, "application/octet-stream")},
+            data={"segment_index": index},
+            timeout=120,
+        )
+        r.raise_for_status()
+    fin = session.post(f"{MEDIA_UPLOAD_URL}/{media_id}/finalize", timeout=60)
+    fin.raise_for_status()
+    info = fin.json().get("data", {}).get("processing_info")
+    waited = 0
+    while info and info.get("state") in ("pending", "in_progress"):
+        wait = max(1, int(info.get("check_after_secs", 5)))
+        if waited + wait > VIDEO_WAIT_LIMIT_SECONDS:
+            raise RuntimeError("動画の処理が時間内に終わりませんでした")
+        clock.sleep(wait)
+        waited += wait
+        st = session.get(MEDIA_UPLOAD_URL, params={"command": "STATUS", "media_id": media_id}, timeout=60)
+        st.raise_for_status()
+        info = st.json().get("data", {}).get("processing_info")
+    if info and info.get("state") == "failed":
+        raise RuntimeError(f"動画の処理に失敗しました: {info.get('error')}")
+    return media_id
+
+
+def upload_image(path: str) -> str:
+    """画像を X にアップロードし、media id を返す（tweepy は v2 のアップロードに未対応）。"""
+    session = x_session()
     with open(ROOT / path, "rb") as f:
         response = session.post(
             MEDIA_UPLOAD_URL,
@@ -89,7 +138,14 @@ def main() -> int:
         access_token_secret=os.environ["X_ACCESS_TOKEN_SECRET"],
     )
     media_ids = None
-    if target.get("image"):
+    if target.get("video"):
+        # 動画が主役の投稿なので、動画が載らないときは投稿せず次の枠でやり直す
+        try:
+            media_ids = [upload_video(target["video"])]
+        except Exception as e:
+            print(f"動画のアップロードに失敗したため、この枠では投稿しません: {e}", file=sys.stderr)
+            return 1
+    elif target.get("image"):
         try:
             media_ids = [upload_image(target["image"])]
         except Exception as e:  # 画像が失敗しても本文だけは投稿する
