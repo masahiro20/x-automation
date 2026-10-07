@@ -10,7 +10,7 @@
 ## マドリ3D（公開中）
 - URL: https://madori-presentation.vercel.app
 - リポジトリ: https://github.com/masahiro20/presentation-
-- デモ動画: `assets/demos/madori3d.mp4`（27秒・字幕付き。PDF読み込み → 3D → 鳥瞰 → 2階/1階の模型 → 立面図 → 日照）
+- デモ動画: `assets/demos/madori3d.mp4`（26秒・字幕付き。外観360° → 平面図 → 3D → LDKのウォークスルー → 夏至の日照タイムラプス）
 - ジャンル: 住宅
 - ひとことで: 平面図のPDFを1枚入れるだけで、家が立体になる。注文住宅の提案用
 - できること
