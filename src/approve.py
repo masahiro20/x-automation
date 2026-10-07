@@ -51,7 +51,8 @@ def drop(queue: list[dict], ids: list[str]) -> list[dict]:
 
 def edit(queue: list[dict], post_id: str, text: str) -> dict:
     (target,) = pick(queue, [post_id])
-    found = problems_of({**target, "text": text})
+    # キューには画像のパスと spec（image_spec）が入っている。チェックは本文と出典と画像の spec で行う
+    found = problems_of({"text": text, "category": target.get("category"), "sources": target.get("sources"), "image": target.get("image_spec")})
     if found:
         raise SystemExit("直した本文に問題があります: " + " / ".join(found))
     target["text"] = text.strip()

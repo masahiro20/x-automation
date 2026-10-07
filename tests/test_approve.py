@@ -55,3 +55,10 @@ def test_edit_keeps_draft_status():
 
 def test_murmur_needs_no_source():
     assert problems_of({"text": "今日はAIと壁打ちしてた", "category": "つぶやき"}) == []
+
+
+def test_edit_works_on_posts_with_rendered_images():
+    q = [{"id": "i1", "text": "旧", "category": "作品紹介", "sources": ["https://x"], "status": "draft",
+          "image": "queue/images/i1.png", "image_spec": {"kind": "checklist", "title": "t", "items": ["a"]}}]
+    edit(q, "i1", "新しい本文")
+    assert q[0]["text"] == "新しい本文"
