@@ -58,15 +58,15 @@ git pull --ff-only origin main
 - 運用方針の「インプが伸びやすい書き方」を守る（動画最優先・冒頭 1 行・短く・本文にリンクを入れない）
 - works.md の「エピソード」が空の作品は、体験や気持ちを作らず、事実（できること・仕組み・数字）で書く
 - **角度リストに動画の指定があれば、その動画を `"video": "assets/demos/〇〇.mp4"` で付ける**（同じ動画は 1 週間に 1 回まで）
-- 動画が無い作品紹介には、なるべく画像を付ける（spec の項目: `kind`（table / checklist / number）, `title`, `highlight`,
-  `headers`, `rows`, `items`, `big_text`, `caption`, `conclusion`, `note`。`verdict` は使わない）
+- **図解カード（`image`）は付けない**。動画が無いときは文字だけにする
+- 運用方針の「絶対のルール」を守る（つないでいるツールや契約書などの中身は、文章にも動画にも出さない）
 - 書いたら声に出して読んで、宣伝文や AI の文章に聞こえないかを確かめる
 
 ## 4. 確かめて、下書きとして追加
 ```bash
 python src/add_posts.py drafts.json --preview <スクラッチパッド>/preview
 ```
-- 画像は **1 枚ずつ Read で開いて目で見る**。はみ出し・重なり・中身の間違いを直す。NG と出た候補は直すか外す
+- NG と出た候補は直すか外す
 ```bash
 python src/add_posts.py drafts.json
 git add queue/ && git commit -m "下書きを追加（Claude Code）" && git push origin main

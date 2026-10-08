@@ -63,9 +63,8 @@ def problems_of(post: dict) -> list[str]:
             found.append(f"動画が見つからないか mp4 ではない: {video}")
         elif path.stat().st_size > MAX_VIDEO_BYTES:
             found.append(f"動画が大きすぎる（{path.stat().st_size // 1024 // 1024}MB）")
-    image = post.get("image")
-    if image and image.get("kind") not in IMAGE_KINDS:
-        found.append(f"画像の種類が不明: {image.get('kind')}")
+    if post.get("image"):
+        found.append("図解カードは使わない（10/8 にやめた。動画を付けるか文字だけにする）")
     return found
 
 

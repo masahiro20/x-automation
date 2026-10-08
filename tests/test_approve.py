@@ -62,3 +62,8 @@ def test_edit_works_on_posts_with_rendered_images():
           "image": "queue/images/i1.png", "image_spec": {"kind": "checklist", "title": "t", "items": ["a"]}}]
     edit(q, "i1", "新しい本文")
     assert q[0]["text"] == "新しい本文"
+
+
+def test_new_drafts_with_image_cards_are_rejected():
+    found = problems_of({"text": "本文", "category": "作品紹介", "sources": ["https://x"], "image": {"kind": "checklist"}})
+    assert any("図解カード" in f for f in found)
