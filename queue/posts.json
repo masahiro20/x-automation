@@ -1214,5 +1214,18 @@
     "created_at": "2026-10-07T23:50:52+09:00",
     "author": "claude-code",
     "video": "queue/videos/2abc663337e4.mp4"
+  },
+  {
+    "id": "37ead1172988",
+    "text": "契約書のWordを、そのまま入力フォームにできるようにした。\n\n{{項目名}} と書いておくだけで入力欄になって、\n入れた内容が、書式そのままWordに戻る。\n\n表も余白もフォントも元のまま。\nまだ準備中だけど、動きはこんな感じです。\n\n※動画の契約書は架空のサンプルです",
+    "category": "作品紹介",
+    "topic": "ケイヤクメーカー",
+    "sources": [
+      "config/works.md"
+    ],
+    "status": "draft",
+    "created_at": "2026-10-08T09:27:58+09:00",
+    "author": "claude-code",
+    "video": "queue/videos/37ead1172988.mp4"
   }
 ]
